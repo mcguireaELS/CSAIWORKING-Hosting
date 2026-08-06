@@ -2,12 +2,11 @@
 
 This repository hosts the materials from the AI Working Group showcase: a branded presentation and a one page guide to hosting HTML products on GitHub Pages. It also serves as a live example of the pattern itself, build a product in Claude, host it here, and share one link.
 
-The ClinicalKey AI Digital Engagement hub shown in the presentation lives in its own separate repository and is linked from the deck.
-
 ## What is in this repository
 
 | Piece | Path | What it is |
 | --- | --- | --- |
+| Landing page | `/index.html` | Home page linking to the showcase and hosting steps |
 | The showcase | `/showcase/` | Branded slide style presentation given to the AI Working Group |
 | Hosting steps | `/hosting-steps/` | One page guide to hosting an HTML product on GitHub Pages |
 | Brand fonts | `/fonts/` | The six Elsevier web fonts (woff2), referenced by relative paths |
@@ -16,14 +15,15 @@ The ClinicalKey AI Digital Engagement hub shown in the presentation lives in its
 
 Served from the address shown in `Settings > Pages`. Replace the base below with your actual Pages URL if it differs.
 
+- Home: `https://mcguireaels.github.io/CSAIWORKING-Hosting/`
 - Showcase: `https://mcguireaels.github.io/CSAIWORKING-Hosting/showcase/`
 - Hosting steps: `https://mcguireaels.github.io/CSAIWORKING-Hosting/hosting-steps/`
-- The hub (separate repository): `https://mcguireaels.github.io/CK-AI-Digital-Engagement-Model-Wireframe/`
 
 ## Repository layout
 
 ```
 /
+|- index.html            landing page linking to both
 |- README.md             this file
 |- showcase/
 |  |- index.html         the presentation
