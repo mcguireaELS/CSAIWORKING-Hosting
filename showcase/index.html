@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Showcase: from a Claude build to a hosted, testable product</title>
+<style>
+  /* ---------- Elsevier brand web fonts (served from repo /fonts) ---------- */
+  @font-face{font-family:"Tiempos Text";src:url("../fonts/tiempos-text-regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+  @font-face{font-family:"Tiempos Text";src:url("../fonts/tiempos-text-regular-italic.woff2") format("woff2");font-weight:400;font-style:italic;font-display:swap}
+  @font-face{font-family:"National 2";src:url("../fonts/national-2-regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+  @font-face{font-family:"National 2";src:url("../fonts/national-2-regular-italic.woff2") format("woff2");font-weight:400;font-style:italic;font-display:swap}
+  @font-face{font-family:"National 2";src:url("../fonts/national-2-bold.woff2") format("woff2");font-weight:700;font-style:normal;font-display:swap}
+  @font-face{font-family:"National 2";src:url("../fonts/national-2-bold-italic.woff2") format("woff2");font-weight:700;font-style:italic;font-display:swap}
+
+  :root{
+    --vital-orange:#FF551D;
+    --graphite:#1E1E1E;
+    --white:#FFFFFF;
+    --ink:#544946;
+    --sand:#EEE7D7;
+    --paper:#F7F4EF;
+    --action-blue:#2354FF;
+    --ivory:#E1DFDB;
+    --serif:"Tiempos Text",Georgia,serif;
+    --sans:"National 2",Arial,sans-serif;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:var(--sans);
+    color:var(--graphite);
+    background:var(--paper);
+    letter-spacing:-0.02em;
+    -webkit-font-smoothing:antialiased;
+    overflow:hidden;
+  }
+
+  /* ---------- deck frame ---------- */
+  .deck{position:fixed;inset:0;display:flex;flex-direction:column}
+
+  .topbar{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 40px;border-bottom:1px solid var(--ivory);
+    flex:0 0 auto;
+  }
+  .wordmark{font-family:var(--sans);font-weight:700;font-size:18px;letter-spacing:-0.02em;color:var(--graphite)}
+  .topbar-right{display:flex;align-items:center;gap:18px}
+  .kicker{font-family:var(--sans);font-size:12px;color:var(--ink);letter-spacing:0.02em}
+
+  .stage{position:relative;flex:1 1 auto;overflow:hidden}
+
+  .slide{
+    position:absolute;inset:0;
+    display:flex;flex-direction:column;justify-content:center;
+    padding:6vh 8vw;
+    opacity:0;visibility:hidden;
+    transform:translateX(24px);
+    transition:opacity .38s ease,transform .38s ease,visibility 0s linear .38s;
+  }
+  .slide.is-active{opacity:1;visibility:visible;transform:none;transition:opacity .38s ease,transform .38s ease}
+
+  .eyebrow{
+    display:inline-flex;align-items:baseline;gap:12px;
+    font-family:var(--sans);font-weight:700;font-size:14px;
+    text-transform:uppercase;letter-spacing:0.08em;color:var(--ink);
+    margin-bottom:22px;
+  }
+  .eyebrow .num{
+    font-family:var(--sans);font-weight:700;font-size:14px;color:var(--vital-orange);
+  }
+
+  h1.title{font-family:var(--serif);font-weight:400;font-size:clamp(38px,6.2vw,84px);line-height:1.02;color:var(--graphite);max-width:16ch}
+  h2.head{font-family:var(--serif);font-weight:400;font-size:clamp(30px,4.6vw,60px);line-height:1.06;color:var(--graphite);max-width:20ch}
+  .head em,.title em{font-style:italic;color:var(--vital-orange)}
+
+  .sub{font-family:var(--sans);font-weight:400;font-size:clamp(16px,1.7vw,21px);color:var(--ink);margin-top:26px;max-width:46ch;line-height:1.5}
+  .byline{font-family:var(--sans);font-weight:400;font-size:15px;color:var(--ink);margin-top:40px;letter-spacing:0}
+  .byline strong{font-weight:700;color:var(--graphite)}
+
+  .points{list-style:none;margin-top:34px;max-width:60ch;display:flex;flex-direction:column;gap:18px}
+  .points li{position:relative;padding-left:0;font-size:clamp(16px,1.6vw,20px);line-height:1.5;color:var(--graphite)}
+  .points li b{font-family:var(--sans);font-weight:700}
+  .points li .muted{color:var(--ink)}
+
+  /* two-column compare block (email/sharepoint vs hosting) */
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:34px;max-width:74ch}
+  .card{border:1px solid var(--ivory);border-radius:12px;padding:24px 26px;background:var(--white)}
+  .card.host{border-color:var(--vital-orange);border-width:2px}
+  .card h3{font-family:var(--sans);font-weight:700;font-size:15px;text-transform:uppercase;letter-spacing:0.06em;color:var(--ink);margin-bottom:14px}
+  .card.host h3{color:var(--ink)}
+  .card ul{list-style:none;display:flex;flex-direction:column;gap:11px}
+  .card li{font-size:16px;line-height:1.45;color:var(--graphite);padding-left:20px;position:relative}
+  .card li::before{content:"";position:absolute;left:0;top:.6em;width:7px;height:7px;border-radius:50%;background:var(--sand)}
+  .card.host li::before{background:var(--vital-orange)}
+
+  /* live-demo call slide */
+  .demo-cue{margin-top:30px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    font-family:var(--sans);font-weight:700;font-size:16px;letter-spacing:0;
+    background:var(--action-blue);color:var(--white);
+    text-decoration:none;padding:14px 24px;border-radius:8px;border:none;cursor:pointer;
+    transition:background .18s ease,transform .18s ease;
+  }
+  .btn:hover{background:#1a44d6}
+  .btn:active{transform:translateY(1px)}
+  .btn.secondary{background:transparent;color:var(--action-blue);border:2px solid var(--action-blue);padding:12px 22px}
+  .btn.secondary:hover{background:rgba(35,84,255,.06)}
+  .btn .arrow{font-size:18px;line-height:1}
+
+
+  .takeaway{
+    margin-top:32px;border-left:3px solid var(--vital-orange);
+    padding:6px 0 6px 22px;max-width:58ch;
+    font-family:var(--serif);font-style:italic;font-size:clamp(19px,2.1vw,26px);
+    line-height:1.32;color:var(--graphite);
+  }
+
+  /* ---------- controls / chrome ---------- */
+  .controls{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 40px;border-top:1px solid var(--ivory);flex:0 0 auto;gap:20px;
+  }
+  .progress{flex:1 1 auto;height:3px;background:var(--ivory);border-radius:2px;overflow:hidden}
+  .progress-fill{height:100%;width:0;background:var(--vital-orange);transition:width .38s ease}
+  .nav{display:flex;align-items:center;gap:10px}
+  .navbtn{
+    font-family:var(--sans);font-weight:700;font-size:14px;letter-spacing:0;
+    background:var(--white);color:var(--action-blue);border:1px solid var(--ivory);
+    border-radius:7px;padding:9px 16px;cursor:pointer;transition:border-color .18s ease,background .18s ease;
+  }
+  .navbtn:hover{border-color:var(--action-blue)}
+  .navbtn:disabled{color:var(--ink);opacity:.4;cursor:default;border-color:var(--ivory)}
+  .counter{font-family:var(--sans);font-size:13px;color:var(--ink);min-width:64px;text-align:center;letter-spacing:0}
+  .notesbtn{font-family:var(--sans);font-weight:700;font-size:13px;color:var(--ink);background:none;border:none;cursor:pointer;letter-spacing:0.02em}
+  .notesbtn:hover{color:var(--graphite)}
+  .notesbtn[aria-pressed="true"]{color:var(--vital-orange)}
+
+  /* presenter notes drawer */
+  .notes{
+    position:fixed;left:0;right:0;bottom:0;
+    background:var(--graphite);color:var(--white);
+    padding:22px 40px 26px;
+    transform:translateY(100%);transition:transform .3s ease;
+    z-index:40;max-height:42vh;overflow:auto;
+  }
+  .notes.open{transform:none}
+  .notes-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+  .notes h4{font-family:var(--sans);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:0.08em;color:var(--sand)}
+  .notes-close{font-family:var(--sans);font-weight:700;font-size:13px;letter-spacing:0.02em;color:var(--sand);background:none;border:1px solid rgba(255,255,255,.28);border-radius:6px;padding:6px 13px;cursor:pointer;transition:color .18s ease,border-color .18s ease}
+  .notes-close:hover{color:var(--white);border-color:rgba(255,255,255,.6)}
+  .notes p{font-size:15px;line-height:1.55;color:var(--white);max-width:90ch;margin-bottom:8px}
+  .notes p b{color:#FFC7B4}
+
+  /* focus visibility (Action Blue focus ring) */
+  a:focus-visible,button:focus-visible{outline:3px solid var(--action-blue);outline-offset:2px;border-radius:4px}
+
+  .hint{position:fixed;top:64px;right:40px;font-family:var(--sans);font-size:12px;color:var(--ink);opacity:.75;letter-spacing:0;z-index:5}
+  .hint kbd{font-family:var(--sans);font-weight:700;background:var(--white);border:1px solid var(--ivory);border-radius:4px;padding:1px 6px;margin:0 2px}
+
+  @media (max-width:760px){
+    .slide{padding:5vh 7vw}
+    .compare{grid-template-columns:1fr;gap:16px}
+    .topbar,.controls{padding-left:20px;padding-right:20px}
+    .hint{display:none}
+    .notes{padding-left:20px;padding-right:20px;max-height:55vh}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .slide{transition:opacity .001s;transform:none}
+    .slide.is-active{transition:opacity .001s}
+    .progress-fill{transition:none}
+    .notes{transition:none}
+  }
+</style>
+</head>
+<body>
+<div class="deck" role="application" aria-label="AI showcase presentation">
+
+  <div class="topbar">
+    <div class="wordmark">Elsevier</div>
+    <div class="topbar-right">
+      <span class="kicker">Customer Success AI Working Group</span>
+    </div>
+  </div>
+
+  <div class="hint">Navigate with <kbd>&larr;</kbd><kbd>&rarr;</kbd> &middot; notes <kbd>N</kbd></div>
+
+  <div class="stage" id="stage">
+
+    <!-- 0 TITLE -->
+    <section class="slide" data-notes="Opening line: I want to show you something I built with Claude that is now live at a web address anyone can open, and talk about the one step that actually made it useful, which is hosting it. Keep this to about a minute.">
+      <span class="eyebrow">AI show and tell</span>
+      <h1 class="title">From a Claude build to a <em>hosted</em>, testable product</h1>
+      <p class="sub">The ClinicalKey AI Digital Engagement hub: a guided, self service onboarding experience for customers who do not get a dedicated success manager.</p>
+      <p class="byline"><strong>Andrew McGuire</strong> &nbsp;&middot;&nbsp; Customer Success AI Working Group &nbsp;&middot;&nbsp; August 2026</p>
+    </section>
+
+    <!-- 1 FRAME -->
+    <section class="slide" data-notes="Set expectations for the ten minutes: first I click through it, then what hosting means and why it beats email or SharePoint, then why we used GitHub, and finally why this matters for us, because any of us can do this.">
+      <span class="eyebrow"><span class="num">01</span>What you will see</span>
+      <h2 class="head">What you will see</h2>
+      <ul class="points">
+        <li><b>See it live.</b> <span class="muted">A quick click through of the working hub.</span></li>
+        <li><b>What hosting means.</b> <span class="muted">And why it beats emailing a file or using SharePoint.</span></li>
+        <li><b>Why GitHub.</b> <span class="muted">The tool we already had, and its honest downside.</span></li>
+        <li><b>Why it matters for us.</b> <span class="muted">This is a pattern any of us can reuse.</span></li>
+      </ul>
+    </section>
+
+    <!-- 2 LIVE WALKTHROUGH -->
+    <section class="slide" data-notes="Switch to the live hub now. Paste or click the link in front of them, the point being made silently is that you sent a link, not an attachment, and here it is running. Show the real path: entry with email capture, the guided journey, the branded look, an interaction or two, any embedded video. Narrate what a customer with no CSM experiences. Do not tour every screen. Show enough that interactivity, branding and flow are obvious, then stop.">
+      <span class="eyebrow"><span class="num">02</span>Live demo</span>
+      <h2 class="head">Let us just <em>open</em> it</h2>
+      <p class="sub">No attachment. One link. It is running in a normal browser, exactly as a customer would see it.</p>
+      <div class="demo-cue">
+        <a class="btn" href="https://mcguireaels.github.io/CK-AI-Digital-Engagement-Model-Wireframe/" target="_blank" rel="noopener">Open the live hub <span class="arrow">&rarr;</span></a>
+      </div>
+    </section>
+
+    <!-- 3 WHAT HOSTING MEANS -->
+    <section class="slide" data-notes="Teaching moment, keep it plain. A raw HTML file on its own is a document in a Downloads folder, someone needs the file and has to open it. Hosting means the file sits on a computer that is always on and gets a web address, so the file does not travel, people come to it, one live copy and one link. Analogy: emailing the file is mailing everyone a photocopy, hosting is one copy in a display case with an address. Then the three email shortfalls and the SharePoint point. Summary line: email and SharePoint move a file around, hosting gives the thing a home and a front door. Branding point: because I can upload the brand font files to the same location, the page renders in the real Tiempos and National 2, not a Georgia or Arial fallback. Emailed HTML usually strips those fonts, so hosting is also what keeps it on brand.">
+      <span class="eyebrow"><span class="num">03</span>What hosting means</span>
+      <h2 class="head">A file travels. A <em>hosted</em> page has an address</h2>
+      <div class="compare">
+        <div class="card">
+          <h3>Emailing a file &middot; SharePoint</h3>
+          <ul>
+            <li>Everyone holds a separate, frozen copy. Fix it and you resend and hope.</li>
+            <li>Interactive HTML, fonts, video and tracking get stripped, blocked, or forced to download.</li>
+            <li>SharePoint stores documents behind our login. You cannot hand it to an outside customer.</li>
+          </ul>
+        </div>
+        <div class="card host">
+          <h3>Hosting the page</h3>
+          <ul>
+            <li>One live version. Improve it and the link everyone has now shows the new one.</li>
+            <li>It actually runs, in any browser, on any device, with no download.</li>
+            <li>A public address you can share with anyone, inside or outside Elsevier.</li>
+            <li>The brand fonts upload alongside it, so it renders in the real Tiempos and National 2, not a fallback.</li>
+          </ul>
+        </div>
+      </div>
+      <p class="takeaway">Email and SharePoint move a file around. Hosting gives the thing a home and a front door.</p>
+    </section>
+
+    <!-- 4 BEYOND A WIREFRAME -->
+    <section class="slide" data-notes="Draw the line clearly. A wireframe is a sketch meant for us to react to internally. This is not that, it is a working branded product a real customer can use start to finish. Why hosting unlocks testing: it is live at a link so I can put it in front of real pilot users including outside customers, and it is instrumented, it sends interaction data by xAPI to a learning record store so I can see where people click, how far they get, where they drop off. Hosted plus instrumented equals real data, not opinions about a mockup. Tie to roadmap: this is the vehicle for our pilot, early to mid September, and the hosting is what makes it measurable.">
+      <span class="eyebrow"><span class="num">04</span>Beyond a wireframe</span>
+      <h2 class="head">This is not a mockup. It is built for <em>testing</em></h2>
+      <ul class="points">
+        <li><b>Real users, real link.</b> <span class="muted">Because it is live, I can put it in front of pilot users, including customers outside Elsevier.</span></li>
+        <li><b>It is instrumented.</b> <span class="muted">It sends interaction data by xAPI to a learning record store: where people click, how far they get, where they drop off.</span></li>
+        <li><b>Data, not opinions.</b> <span class="muted">Hosted plus instrumented gives real usability and engagement data, not reactions to a sketch.</span></li>
+        <li><b>The pilot vehicle.</b> <span class="muted">Targeted for early to mid September. Hosting is what makes the pilot measurable.</span></li>
+      </ul>
+    </section>
+
+    <!-- 5 WHY GITHUB + THE CATCH -->
+    <section class="slide" data-notes="Why we picked it, lead with the practical reason: we already have access, no new tool, no license request, no procurement, and GitHub Pages hosting is free. The honest catch: GitHub is built for developers, there is no friendly publish button, it throws around repository, commit, branch, and if you have never touched it, it is genuinely confusing. Be straight rather than pretend it is slick. How I got past it: I did not become an expert, I had Claude walk me through it. Be precise, Claude did not click the buttons, it knew the current correct steps and translated the clunky interface into plain instructions, make the repo, add the file, turn on Pages, copy the link. The point to leave them with: this is a good example of leaning into what Claude does well. GitHub is powerful but unfriendly, Claude is very good at knowing or finding the correct procedure and explaining it step by step, so pair them. When a tool is capable but awkward, hand that friction to Claude, instead of asking Claude to do the things it is weaker at. Use each for its strength.">
+      <span class="eyebrow"><span class="num">05</span>Why GitHub</span>
+      <h2 class="head">The tool we already had, and its <em>honest</em> catch</h2>
+      <ul class="points">
+        <li><b>We already have access.</b> <span class="muted">No new tool, no license request, no procurement. And GitHub Pages hosting is free.</span></li>
+        <li><b>The catch: it is built for developers.</b> <span class="muted">No friendly publish button. It talks in repositories, commits and branches. First time through, it is genuinely confusing.</span></li>
+        <li><b>How I got past it.</b> <span class="muted">I did not become an expert. Claude knew the current, correct steps and translated the clunky interface into plain instructions: make the repo, add the file, turn on Pages, copy the link.</span></li>
+      </ul>
+      <p class="takeaway">Lean into what Claude does well. Hand it the capable but awkward tool, and use each for its strength.</p>
+    </section>
+
+    <!-- 6 REUSABLE PATTERN -->
+    <section class="slide" data-notes="The reason I am showing this is not the hub, it is the pattern. Build a product in Claude, host it free on GitHub Pages, share one link, optionally measure how it gets used. That turns I made a cool thing in Claude into I shipped something people can use and learn from. Reassure on effort: with a template, spinning up a new one is a two minute setup, and this lines up with our plan to go deeper on Claude and Cowork. Offer to write up the hosting steps so it is repeatable, then point them at the one pager and README.">
+      <span class="eyebrow"><span class="num">06</span>Why it matters for us</span>
+      <h2 class="head">The pattern, not the <em>hub</em></h2>
+      <ul class="points">
+        <li><b>Build in Claude &rarr; host on GitHub Pages &rarr; share one link &rarr; measure use.</b></li>
+        <li><span class="muted">That turns "I made a cool thing in Claude" into "I shipped something people can use, and learn from."</span></li>
+        <li><b>Low lift.</b> <span class="muted">With a template, a new one is about a two minute setup.</span></li>
+      </ul>
+      <div class="demo-cue">
+        <a class="btn secondary" href="../hosting-steps/index.html" target="_blank" rel="noopener">Open the hosting steps one pager <span class="arrow">&rarr;</span></a>
+      </div>
+    </section>
+
+    <!-- 7 CLOSE -->
+    <section class="slide" data-notes="Short version: Claude built it, hosting made it real, GitHub was the tool we already had, and now it is testable with actual users. If you have an HTML product you want in front of people, come find me and I will walk you through the hosting piece. Optional: take one or two questions.">
+      <span class="eyebrow"><span class="num">07</span>Close</span>
+      <h2 class="head">Claude built it. Hosting made it <em>real</em></h2>
+      <p class="sub">If you have an HTML product you want in front of people, come find me and I will walk you through the hosting piece. The steps are written up so you can do it yourself.</p>
+      <div class="demo-cue">
+        <a class="btn" href="../hosting-steps/index.html" target="_blank" rel="noopener">Hosting steps <span class="arrow">&rarr;</span></a>
+        <a class="btn secondary" href="https://mcguireaels.github.io/CK-AI-Digital-Engagement-Model-Wireframe/" target="_blank" rel="noopener">The live hub <span class="arrow">&rarr;</span></a>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="controls">
+    <div class="nav">
+      <button class="navbtn" id="prev" aria-label="Previous slide">&larr; Prev</button>
+      <span class="counter" id="counter">1 / 8</span>
+      <button class="navbtn" id="next" aria-label="Next slide">Next &rarr;</button>
+    </div>
+    <div class="progress" aria-hidden="true"><div class="progress-fill" id="progress"></div></div>
+    <button class="notesbtn" id="notesToggle" aria-pressed="false">Presenter notes (N)</button>
+  </div>
+
+  <div class="notes" id="notes" aria-live="polite">
+    <div class="notes-head">
+      <h4>Presenter notes</h4>
+      <button class="notes-close" id="notesClose" aria-label="Close presenter notes">Close &times;</button>
+    </div>
+    <p id="notesBody"></p>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var i = 0;
+  var prev = document.getElementById('prev');
+  var next = document.getElementById('next');
+  var counter = document.getElementById('counter');
+  var progress = document.getElementById('progress');
+  var notes = document.getElementById('notes');
+  var notesBody = document.getElementById('notesBody');
+  var notesToggle = document.getElementById('notesToggle');
+  var notesClose = document.getElementById('notesClose');
+  var notesOpen = false;
+  function setNotes(open){
+    notesOpen = open;
+    notes.classList.toggle('open', open);
+    notesToggle.setAttribute('aria-pressed', open ? 'true':'false');
+  }
+
+  function render(){
+    slides.forEach(function(s,idx){ s.classList.toggle('is-active', idx===i); });
+    counter.textContent = (i+1) + ' / ' + slides.length;
+    progress.style.width = ((i+1)/slides.length*100) + '%';
+    prev.disabled = (i===0);
+    next.disabled = (i===slides.length-1);
+    notesBody.textContent = slides[i].getAttribute('data-notes') || '';
+  }
+  function go(n){ i = Math.max(0, Math.min(slides.length-1, n)); render(); }
+
+  prev.addEventListener('click', function(){ go(i-1); });
+  next.addEventListener('click', function(){ go(i+1); });
+  notesToggle.addEventListener('click', function(){ setNotes(!notesOpen); });
+  notesClose.addEventListener('click', function(){ setNotes(false); });
+
+  document.addEventListener('keydown', function(e){
+    if(e.key==='ArrowRight' || e.key==='PageDown' || e.key===' '){ e.preventDefault(); go(i+1); }
+    else if(e.key==='ArrowLeft' || e.key==='PageUp'){ e.preventDefault(); go(i-1); }
+    else if(e.key==='Home'){ e.preventDefault(); go(0); }
+    else if(e.key==='End'){ e.preventDefault(); go(slides.length-1); }
+    else if(e.key==='n' || e.key==='N'){ notesToggle.click(); }
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

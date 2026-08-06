@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Host an HTML product on GitHub Pages</title>
+<style>
+  @font-face{font-family:"Tiempos Text";src:url("../fonts/tiempos-text-regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+  @font-face{font-family:"Tiempos Text";src:url("../fonts/tiempos-text-regular-italic.woff2") format("woff2");font-weight:400;font-style:italic;font-display:swap}
+  @font-face{font-family:"National 2";src:url("../fonts/national-2-regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+  @font-face{font-family:"National 2";src:url("../fonts/national-2-regular-italic.woff2") format("woff2");font-weight:400;font-style:italic;font-display:swap}
+  @font-face{font-family:"National 2";src:url("../fonts/national-2-bold.woff2") format("woff2");font-weight:700;font-style:normal;font-display:swap}
+  @font-face{font-family:"National 2";src:url("../fonts/national-2-bold-italic.woff2") format("woff2");font-weight:700;font-style:italic;font-display:swap}
+
+  :root{
+    --vital-orange:#FF551D;--graphite:#1E1E1E;--white:#FFFFFF;--ink:#544946;
+    --sand:#EEE7D7;--paper:#F7F4EF;--action-blue:#2354FF;--ivory:#E1DFDB;
+    --serif:"Tiempos Text",Georgia,serif;--sans:"National 2",Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);color:var(--graphite);background:var(--paper);letter-spacing:-0.02em;-webkit-font-smoothing:antialiased;line-height:1.5}
+  a{color:var(--action-blue);text-decoration:none;border-bottom:1px solid rgba(35,84,255,.35)}
+  a:hover{border-bottom-color:var(--action-blue)}
+  a:focus-visible{outline:3px solid var(--action-blue);outline-offset:2px;border-radius:3px}
+
+  .wrap{max-width:820px;margin:0 auto;padding:56px 32px 90px}
+
+  .topline{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--ivory);padding-bottom:16px;margin-bottom:44px}
+  .wordmark{font-weight:700;font-size:17px;color:var(--graphite)}
+  .backlink{font-size:14px;letter-spacing:0}
+
+  .eyebrow{font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink);display:flex;align-items:center;gap:12px;margin-bottom:18px}
+  .eyebrow .rule{width:34px;height:2px;background:var(--vital-orange)}
+  h1{font-family:var(--serif);font-weight:400;font-size:clamp(34px,5vw,52px);line-height:1.05;max-width:18ch;margin-bottom:20px}
+  h1 em{font-style:italic;color:var(--vital-orange)}
+  .lede{font-size:19px;color:var(--ink);max-width:60ch;margin-bottom:14px}
+
+  .callout{background:var(--sand);border-radius:12px;padding:22px 26px;margin:34px 0;max-width:64ch}
+  .callout h2{font-family:var(--sans);font-weight:700;font-size:15px;text-transform:uppercase;letter-spacing:0.05em;color:var(--ink);margin-bottom:8px}
+  .callout p{font-size:16px;color:var(--graphite)}
+
+  .prereq{display:flex;gap:14px;flex-wrap:wrap;margin:30px 0 10px}
+  .chip{font-size:14px;font-weight:700;letter-spacing:0;background:var(--white);border:1px solid var(--ivory);border-radius:999px;padding:8px 16px;color:var(--graphite)}
+
+  h3.sec{font-family:var(--sans);font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:0.06em;color:var(--ink);margin:48px 0 8px;padding-top:22px;border-top:1px solid var(--ivory)}
+
+  ol.steps{list-style:none;counter-reset:step;margin-top:20px}
+  ol.steps > li{position:relative;padding-left:74px;margin-bottom:34px;min-height:52px}
+  ol.steps > li::before{
+    counter-increment:step;content:counter(step,decimal-leading-zero);
+    position:absolute;left:0;top:-6px;
+    font-family:var(--serif);font-size:40px;color:var(--vital-orange);line-height:1;
+  }
+  ol.steps h4{font-family:var(--sans);font-weight:700;font-size:20px;letter-spacing:-0.02em;margin-bottom:8px;color:var(--graphite)}
+  ol.steps p{font-size:16.5px;color:var(--graphite);max-width:60ch;margin-bottom:8px}
+  ol.steps p .muted{color:var(--ink)}
+
+  code{font-family:"National 2",Arial,monospace;font-weight:700;background:var(--white);border:1px solid var(--ivory);border-radius:5px;padding:1px 7px;font-size:0.92em;letter-spacing:0}
+  .path{display:inline-block;background:var(--white);border:1px solid var(--ivory);border-radius:6px;padding:6px 12px;font-size:14px;letter-spacing:0;margin-top:4px;color:var(--graphite)}
+
+  .gotchas{margin-top:14px;list-style:none}
+  .gotchas li{position:relative;padding-left:24px;font-size:16px;margin-bottom:12px;max-width:62ch;color:var(--graphite)}
+  .gotchas li::before{content:"";position:absolute;left:0;top:.62em;width:9px;height:2px;background:var(--vital-orange)}
+  .gotchas li b{font-weight:700}
+
+  .footer{margin-top:60px;padding-top:22px;border-top:1px solid var(--ivory);font-size:14px;color:var(--ink);letter-spacing:0;display:flex;gap:22px;flex-wrap:wrap}
+
+  @media print{
+    body{background:var(--white)}
+    .backlink,.footer a{border:none}
+    a{color:var(--graphite)}
+    ol.steps > li::before{color:var(--graphite)}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topline">
+    <div class="wordmark">Elsevier</div>
+    <a class="backlink" href="../showcase/index.html">&larr; Back to the showcase</a>
+  </div>
+
+  <span class="eyebrow"><span class="rule"></span>Customer Success AI Working Group</span>
+  <h1>Host an HTML product on <em>GitHub Pages</em></h1>
+  <p class="lede">A repeatable way to take a single HTML file built in Claude and put it online at a real web address, for free, using the GitHub access we already have.</p>
+
+  <div class="callout">
+    <h2>The mental model</h2>
+    <p>A hosted page is just static files (HTML, CSS, fonts, images) served exactly as they are, straight to the browser. An HTML product from Claude is exactly that: one self contained file that runs in the browser with nothing to install. That is why free static hosting fits it perfectly, and why the setup is light.</p>
+  </div>
+
+  <div class="prereq">
+    <span class="chip">GitHub access (we already have it)</span>
+    <span class="chip">Your index.html</span>
+    <span class="chip">About 5 minutes</span>
+  </div>
+
+  <h3 class="sec">The steps</h3>
+  <ol class="steps">
+    <li>
+      <h4>Create a repository</h4>
+      <p>In GitHub, click <code>New</code>, give the repository a clear name, and set it to <b>Public</b> (GitHub Pages needs public on our plan). Leave the rest default and create it. <span class="muted">A repository is just a folder with a full memory of its own history.</span></p>
+    </li>
+    <li>
+      <h4>Add your files</h4>
+      <p>Use <code>Add file &rarr; Upload files</code> and drag in your <code>index.html</code>. If it uses the brand fonts, upload a <code>fonts</code> folder alongside it so the relative paths resolve. Write a short commit message and click <b>Commit changes</b>.</p>
+      <span class="path">/index.html &nbsp;&middot;&nbsp; /fonts/national-2-regular.woff2 &nbsp;&middot;&nbsp; ...</span>
+    </li>
+    <li>
+      <h4>Turn on GitHub Pages</h4>
+      <p>Go to <code>Settings &rarr; Pages</code>. Under <b>Source</b>, choose <b>Deploy from a branch</b>, set the branch to <code>main</code> and the folder to <code>/ (root)</code>, then <b>Save</b>.</p>
+    </li>
+    <li>
+      <h4>Get your link</h4>
+      <p>Wait about a minute and refresh the Pages settings. A box appears reading <b>"Your site is live at ..."</b> with the full URL. That link is your shareable address. The pattern is predictable:</p>
+      <span class="path">https://&lt;your-account&gt;.github.io/&lt;repo-name&gt;/</span>
+    </li>
+    <li>
+      <h4>Update it anytime</h4>
+      <p>Edit the file in place or re-upload a new version and commit. Within a minute, the <b>same link</b> serves the new version. Nobody needs a new file, and nobody is holding a stale copy.</p>
+    </li>
+  </ol>
+
+  <h3 class="sec">Worth knowing</h3>
+  <ul class="gotchas">
+    <li><b>The entry file must be named</b> <code>index.html</code> <b>to load at the folder root.</b> A page in a subfolder needs its own <code>index.html</code> too.</li>
+    <li><b>Public only, unless paid.</b> Pages serves from public repositories on our plan. Do not put anything confidential in a public repo.</li>
+    <li><b>Give the first deploy a minute.</b> If the live link 404s right away, wait and hard refresh. First builds are the slowest.</li>
+    <li><b>Fonts live in a</b> <code>/fonts</code> <b>folder</b> and are referenced with relative paths, so the folder must travel with the HTML.</li>
+    <li><b>Not for apps that need a database or a login.</b> Static hosting is for self contained pages. A single interactive HTML piece is the ideal case.</li>
+  </ul>
+
+  <div class="footer">
+    <a href="../showcase/index.html">The showcase</a>
+    <a href="https://mcguireaels.github.io/CK-AI-Digital-Engagement-Model-Wireframe/">The live hub</a>
+    <a href="https://github.com/mcguireaELS/CSAIWORKING-Hosting">Repository home</a>
+  </div>
+
+</div>
+</body>
+</html>
