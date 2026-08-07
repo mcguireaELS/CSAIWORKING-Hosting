@@ -38,7 +38,7 @@
   h1 em{font-style:italic;color:var(--vital-orange)}
   .sub{font-size:clamp(16px,1.7vw,20px);color:var(--ink);margin-top:22px;max-width:52ch}
 
-  .cards{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:52px}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:22px;margin-top:52px}
   .card{
     display:flex;flex-direction:column;
     background:var(--white);border:1px solid var(--ivory);border-radius:14px;
@@ -79,7 +79,7 @@
     <div class="accent"></div>
     <p class="eyebrow">Customer Success AI Working Group</p>
     <h1>Build it in Claude, then <em>host</em> it</h1>
-    <p class="sub">Two resources from the AI show and tell: the presentation, and a short guide to putting your own HTML products online with GitHub Pages.</p>
+    <p class="sub">The presentation, a short guide to hosting your own HTML products on GitHub Pages, and the Elsevier brand reference for building more.</p>
 
     <div class="cards">
       <a class="card" href="showcase/index.html">
@@ -93,6 +93,12 @@
         <h2>Hosting steps</h2>
         <p>A one page reference for hosting an HTML product on GitHub Pages, start to finish.</p>
         <span class="go">Open the guide <span class="arrow">&rarr;</span></span>
+      </a>
+      <a class="card" href="branding/index.html">
+        <span class="label">Reference</span>
+        <h2>Branding guidance</h2>
+        <p>The Elsevier colors, type, and accessibility rules for building on brand.</p>
+        <span class="go">Open the guidance <span class="arrow">&rarr;</span></span>
       </a>
     </div>
   </main>
