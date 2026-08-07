@@ -9,6 +9,7 @@ This repository hosts the materials from the AI Working Group showcase: a brande
 | Landing page | `/index.html` | Home page linking to the showcase and hosting steps |
 | The showcase | `/showcase/` | Branded slide style presentation given to the AI Working Group |
 | Hosting steps | `/hosting-steps/` | One page guide to hosting an HTML product on GitHub Pages |
+| Branding with Claude | `/branding/` | Workflow for consistent on-brand HTML and PowerPoint from Claude |
 | Brand fonts | `/fonts/` | The six Elsevier web fonts (woff2), referenced by relative paths |
 
 ## Live site
@@ -18,17 +19,20 @@ Served from the address shown in `Settings > Pages`. Replace the base below with
 - Home: `https://mcguireaels.github.io/CSAIWORKING-Hosting/`
 - Showcase: `https://mcguireaels.github.io/CSAIWORKING-Hosting/showcase/`
 - Hosting steps: `https://mcguireaels.github.io/CSAIWORKING-Hosting/hosting-steps/`
+- Branding guidance: `https://mcguireaels.github.io/CSAIWORKING-Hosting/branding/`
 
 ## Repository layout
 
 ```
 /
-|- index.html            landing page linking to both
+|- index.html            landing page linking to the pages
 |- README.md             this file
 |- showcase/
 |  |- index.html         the presentation
 |- hosting-steps/
 |  |- index.html         the hosting one pager
+|- branding/
+|  |- index.html         the branding reference
 |- fonts/
    |- tiempos-text-regular.woff2
    |- tiempos-text-regular-italic.woff2

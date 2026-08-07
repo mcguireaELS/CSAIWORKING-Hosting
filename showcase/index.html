@@ -76,6 +76,9 @@
   .head em,.title em{font-style:italic;color:var(--vital-orange)}
 
   .sub{font-family:var(--sans);font-weight:400;font-size:clamp(16px,1.7vw,21px);color:var(--ink);margin-top:26px;max-width:46ch;line-height:1.5}
+  .definition{font-family:var(--sans);font-weight:400;font-size:clamp(17px,1.9vw,23px);color:var(--graphite);margin-top:30px;max-width:58ch;line-height:1.5}
+  .definition a.inline{color:var(--action-blue);text-decoration:underline;text-underline-offset:2px}
+  .definition em{font-style:italic}
   .byline{font-family:var(--sans);font-weight:400;font-size:15px;color:var(--ink);margin-top:40px;letter-spacing:0}
   .byline strong{font-weight:700;color:var(--graphite)}
 
@@ -190,39 +193,9 @@
 
   <div class="stage" id="stage">
 
-    <!-- 0 TITLE -->
-    <section class="slide" data-notes="Opening line: I want to show you something I built with Claude that is now live at a web address anyone can open, and talk about the one step that actually made it useful, which is hosting it. Keep this to about a minute.">
-      <span class="eyebrow">AI show and tell</span>
-      <h1 class="title">From a Claude build to a <em>hosted</em>, testable product</h1>
-      <p class="sub">The ClinicalKey AI Digital Engagement hub: a guided, self service onboarding experience for customers who do not get a dedicated success manager.</p>
-      <p class="byline"><strong>Andrew McGuire</strong> &nbsp;&middot;&nbsp; Customer Success AI Working Group &nbsp;&middot;&nbsp; August 2026</p>
-    </section>
-
-    <!-- 1 FRAME -->
-    <section class="slide" data-notes="Set expectations for the ten minutes: first I click through it, then what hosting means and why it beats email or SharePoint, then why we used GitHub, and finally why this matters for us, because any of us can do this.">
-      <span class="eyebrow"><span class="num">01</span>What you will see</span>
-      <h2 class="head">What you will see</h2>
-      <ul class="points">
-        <li><b>See it live.</b> <span class="muted">A quick click through of the working hub.</span></li>
-        <li><b>What hosting means.</b> <span class="muted">And why it beats emailing a file or using SharePoint.</span></li>
-        <li><b>Why GitHub.</b> <span class="muted">The tool we already had, and its honest downside.</span></li>
-        <li><b>Why it matters for us.</b> <span class="muted">This is a pattern any of us can reuse.</span></li>
-      </ul>
-    </section>
-
-    <!-- 2 LIVE WALKTHROUGH -->
-    <section class="slide" data-notes="Switch to the live hub now. Paste or click the link in front of them, the point being made silently is that you sent a link, not an attachment, and here it is running. Show the real path: entry with email capture, the guided journey, the branded look, an interaction or two, any embedded video. Narrate what a customer with no CSM experiences. Do not tour every screen. Show enough that interactivity, branding and flow are obvious, then stop.">
-      <span class="eyebrow"><span class="num">02</span>Live demo</span>
-      <h2 class="head">Let us just <em>open</em> it</h2>
-      <p class="sub">No attachment. One link. It is running in a normal browser, exactly as a customer would see it.</p>
-      <div class="demo-cue">
-        <a class="btn" href="https://mcguireaels.github.io/CK-AI-Digital-Engagement-Model-Wireframe/" target="_blank" rel="noopener">Open the live hub <span class="arrow">&rarr;</span></a>
-      </div>
-    </section>
-
-    <!-- 3 WHAT HOSTING MEANS -->
+    <!-- 1 WHAT HOSTING MEANS -->
     <section class="slide" data-notes="Teaching moment, keep it plain. A raw HTML file on its own is a document in a Downloads folder, someone needs the file and has to open it. Hosting means the file sits on a computer that is always on and gets a web address, so the file does not travel, people come to it, one live copy and one link. Analogy: emailing the file is mailing everyone a photocopy, hosting is one copy in a display case with an address. Then the three email shortfalls and the SharePoint point. Summary line: email and SharePoint move a file around, hosting gives the thing a home and a front door. Branding point: because I can upload the brand font files to the same location, the page renders in the real Tiempos and National 2, not a Georgia or Arial fallback. Emailed HTML usually strips those fonts, so hosting is also what keeps it on brand.">
-      <span class="eyebrow"><span class="num">03</span>What hosting means</span>
+      <span class="eyebrow"><span class="num">01</span>What hosting means</span>
       <h2 class="head">A file travels. A <em>hosted</em> page has an address</h2>
       <div class="compare">
         <div class="card">
@@ -246,9 +219,9 @@
       <p class="takeaway">Email and SharePoint move a file around. Hosting gives the thing a home and a front door.</p>
     </section>
 
-    <!-- 4 BEYOND A WIREFRAME -->
+    <!-- 2 BEYOND A WIREFRAME -->
     <section class="slide" data-notes="Draw the line clearly. A wireframe is a sketch meant for us to react to internally. This is not that, it is a working branded product a real customer can use start to finish. Why hosting unlocks testing: it is live at a link so I can put it in front of real pilot users including outside customers, and it is instrumented, it sends interaction data by xAPI to a learning record store so I can see where people click, how far they get, where they drop off. Hosted plus instrumented equals real data, not opinions about a mockup. Tie to roadmap: this is the vehicle for our pilot, early to mid September, and the hosting is what makes it measurable.">
-      <span class="eyebrow"><span class="num">04</span>Beyond a wireframe</span>
+      <span class="eyebrow"><span class="num">02</span>Beyond a wireframe</span>
       <h2 class="head">This is not a mockup. It is built for <em>testing</em></h2>
       <ul class="points">
         <li><b>Real users, real link.</b> <span class="muted">Because it is live, I can put it in front of pilot users, including customers outside Elsevier.</span></li>
@@ -258,9 +231,16 @@
       </ul>
     </section>
 
-    <!-- 5 WHY GITHUB + THE CATCH -->
+    <!-- 3 WHAT IS GIT -->
+    <section class="slide" data-notes="Quick definition before we talk GitHub, since the next slides use the words repository, commit and branch, which are all Git terms. About fifteen seconds. Git is the version control system, the time machine, that tracks changes to files and lets people collaborate without overwriting each other. GitHub is the website built on top of Git. You do not need to master Git to use GitHub Pages, but knowing the word makes the commit step make sense.">
+      <span class="eyebrow"><span class="num">03</span>What is Git</span>
+      <h2 class="head">First, what <em>Git</em> actually is</h2>
+      <p class="definition"><a class="inline" href="https://git-scm.com/" target="_blank" rel="noopener">Git</a> is a free, open-source distributed version control system designed to track changes in source code during software development. It acts like a <em>time machine</em> for your files, allowing you to save snapshots of your project, revert to older versions, and collaborate with other developers without overwriting each other's work.</p>
+    </section>
+
+    <!-- 4 WHY GITHUB + THE CATCH -->
     <section class="slide" data-notes="Why we picked it, lead with the practical reason: we already have access, no new tool, no license request, no procurement, and GitHub Pages hosting is free. The honest catch: GitHub is built for developers, there is no friendly publish button, it throws around repository, commit, branch, and if you have never touched it, it is genuinely confusing. Be straight rather than pretend it is slick. How I got past it: I did not become an expert, I had Claude walk me through it. Be precise, Claude did not click the buttons, it knew the current correct steps and translated the clunky interface into plain instructions, make the repo, add the file, turn on Pages, copy the link. The point to leave them with: this is a good example of leaning into what Claude does well. GitHub is powerful but unfriendly, Claude is very good at knowing or finding the correct procedure and explaining it step by step, so pair them. When a tool is capable but awkward, hand that friction to Claude, instead of asking Claude to do the things it is weaker at. Use each for its strength.">
-      <span class="eyebrow"><span class="num">05</span>Why GitHub</span>
+      <span class="eyebrow"><span class="num">04</span>Why GitHub</span>
       <h2 class="head">The tool we already had, and its <em>honest</em> catch</h2>
       <ul class="points">
         <li><b>We already have access.</b> <span class="muted">No new tool, no license request, no procurement. And GitHub Pages hosting is free.</span></li>
@@ -270,10 +250,10 @@
       <p class="takeaway">Lean into what Claude does well. Hand it the capable but awkward tool, and use each for its strength.</p>
     </section>
 
-    <!-- 6 REUSABLE PATTERN -->
-    <section class="slide" data-notes="The reason I am showing this is not the hub, it is the pattern. Build a product in Claude, host it free on GitHub Pages, share one link, optionally measure how it gets used. That turns I made a cool thing in Claude into I shipped something people can use and learn from. Reassure on effort: with a template, spinning up a new one is a two minute setup, and this lines up with our plan to go deeper on Claude and Cowork. Offer to write up the hosting steps so it is repeatable, then point them at the one pager and README.">
-      <span class="eyebrow"><span class="num">06</span>Why it matters for us</span>
-      <h2 class="head">The pattern, not the <em>hub</em></h2>
+    <!-- 5 REUSABLE PATTERN -->
+    <section class="slide" data-notes="The point is not any single product, it is the pattern. Build a product in Claude, host it free on GitHub Pages, share one link, optionally measure how it gets used. That turns I made a cool thing in Claude into I shipped something people can use and learn from. Reassure on effort: with a template, spinning up a new one is a two minute setup, and this lines up with our plan to go deeper on Claude and Cowork. Offer to write up the hosting steps so it is repeatable, then point them at the one pager and README.">
+      <span class="eyebrow"><span class="num">05</span>Why it matters for us</span>
+      <h2 class="head">The pattern, not the <em>product</em></h2>
       <ul class="points">
         <li><b>Build in Claude &rarr; host on GitHub Pages &rarr; share one link &rarr; measure use.</b></li>
         <li><span class="muted">That turns "I made a cool thing in Claude" into "I shipped something people can use, and learn from."</span></li>
@@ -284,14 +264,13 @@
       </div>
     </section>
 
-    <!-- 7 CLOSE -->
+    <!-- 6 CLOSE -->
     <section class="slide" data-notes="Short version: Claude built it, hosting made it real, GitHub was the tool we already had, and now it is testable with actual users. If you have an HTML product you want in front of people, come find me and I will walk you through the hosting piece. Optional: take one or two questions.">
-      <span class="eyebrow"><span class="num">07</span>Close</span>
+      <span class="eyebrow"><span class="num">06</span>Close</span>
       <h2 class="head">Claude built it. Hosting made it <em>real</em></h2>
       <p class="sub">If you have an HTML product you want in front of people, come find me and I will walk you through the hosting piece. The steps are written up so you can do it yourself.</p>
       <div class="demo-cue">
         <a class="btn" href="../hosting-steps/index.html" target="_blank" rel="noopener">Hosting steps <span class="arrow">&rarr;</span></a>
-        <a class="btn secondary" href="https://mcguireaels.github.io/CK-AI-Digital-Engagement-Model-Wireframe/" target="_blank" rel="noopener">The live hub <span class="arrow">&rarr;</span></a>
       </div>
     </section>
 
@@ -300,7 +279,7 @@
   <div class="controls">
     <div class="nav">
       <button class="navbtn" id="prev" aria-label="Previous slide">&larr; Prev</button>
-      <span class="counter" id="counter">1 / 8</span>
+      <span class="counter" id="counter">1 / 6</span>
       <button class="navbtn" id="next" aria-label="Next slide">Next &rarr;</button>
     </div>
     <div class="progress" aria-hidden="true"><div class="progress-fill" id="progress"></div></div>
