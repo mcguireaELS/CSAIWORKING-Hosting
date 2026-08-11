@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Branding with Claude</title>
+<link rel="icon" href="../logos/elsevier-favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="../logos/elsevier-favicon.png">
+<link rel="apple-touch-icon" href="../logos/elsevier-favicon.png">
 <style>
   @font-face{font-family:"Tiempos Text";src:url("../fonts/tiempos-text-regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
   @font-face{font-family:"Tiempos Text";src:url("../fonts/tiempos-text-regular-italic.woff2") format("woff2");font-weight:400;font-style:italic;font-display:swap}
@@ -26,16 +29,17 @@
   .wrap{max-width:840px;margin:0 auto;padding:56px 32px 90px}
 
   .topline{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--ivory);padding-bottom:16px;margin-bottom:44px}
-  .wordmark{font-weight:700;font-size:17px;color:var(--graphite)}
+  .wordmark{display:flex;align-items:center}
+  .wordmark img{display:block;height:32px;width:auto}
   .backlink{font-size:14px;letter-spacing:0}
 
-  .eyebrow{font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink);display:flex;align-items:center;gap:12px;margin-bottom:18px}
+  .eyebrow{font-weight:700;font-size:13px;letter-spacing:-0.02em;color:var(--ink);display:flex;align-items:center;gap:12px;margin-bottom:18px}
   .eyebrow .rule{width:34px;height:2px;background:var(--vital-orange)}
   h1{font-family:var(--serif);font-weight:400;font-size:clamp(34px,5vw,54px);line-height:1.04;max-width:18ch;margin-bottom:20px}
-  h1 em{font-style:italic;color:var(--vital-orange)}
+  h1 em{font-style:italic}
   .lede{font-size:19px;color:var(--ink);max-width:64ch}
 
-  h2.sec{font-family:var(--sans);font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:0.06em;color:var(--ink);margin:54px 0 18px;padding-top:24px;border-top:1px solid var(--ivory)}
+  h2.sec{font-family:var(--sans);font-weight:700;font-size:14px;letter-spacing:-0.02em;color:var(--ink);margin:54px 0 18px;padding-top:24px;border-top:1px solid var(--ivory)}
   h3.sub{font-family:var(--sans);font-weight:700;font-size:18px;letter-spacing:-0.02em;color:var(--graphite);margin:28px 0 10px}
   p.body{font-size:16.5px;color:var(--graphite);max-width:64ch;margin-bottom:14px}
   p.body .muted{color:var(--ink)}
@@ -43,7 +47,7 @@
   /* numbered steps */
   ol.steps{list-style:none;counter-reset:step;margin:18px 0 8px}
   ol.steps > li{position:relative;padding-left:74px;margin-bottom:30px;min-height:52px}
-  ol.steps > li::before{counter-increment:step;content:counter(step,decimal-leading-zero);position:absolute;left:0;top:-6px;font-family:var(--serif);font-size:40px;color:var(--vital-orange);line-height:1}
+  ol.steps > li::before{counter-increment:step;content:counter(step,decimal-leading-zero);position:absolute;left:0;top:-6px;font-family:var(--serif);font-size:40px;color:var(--ink);line-height:1}
   ol.steps h4{font-family:var(--sans);font-weight:700;font-size:20px;letter-spacing:-0.02em;margin-bottom:8px;color:var(--graphite)}
   ol.steps p{font-size:16.5px;color:var(--graphite);max-width:62ch;margin-bottom:8px}
   ol.steps p .muted{color:var(--ink)}
@@ -87,7 +91,7 @@
 <div class="wrap">
 
   <div class="topline">
-    <div class="wordmark">Elsevier</div>
+    <div class="wordmark"><img src="../logos/elsevier-primary-graphite.svg" alt="Elsevier"></div>
     <a class="backlink" href="../index.html">&larr; Back to home</a>
   </div>
 
@@ -111,8 +115,9 @@
       <p>Paste the brief further down this page into your Claude project's custom instructions. That way every chat in the project starts already knowing the palette, the type rules, the accessibility limits, and the requirement to use the real fonts. <span class="muted">If you do not use projects, paste it at the top of the chat before you ask for anything.</span></p>
     </li>
     <li>
-      <h4>Upload the font files at the start of each session</h4>
-      <p>The licensed fonts cannot be stored in the project, and the project upload does not accept a zip, so upload the individual files into the chat before asking for branded output. Match the format to the channel: <b>woff2 for HTML</b>, and the <b>.ttf or .otf for PowerPoint</b>. <span class="muted">They come from the brand assets, for example Assets_2025-06-24.zip, which holds both.</span></p>
+      <h4>Download the brand pack and add it to your prompt</h4>
+      <p><a href="../assets/elsevier-brand-pack.zip">Download the brand pack</a>, unzip it, and upload the contents into your chat before you ask for anything branded. It holds the brand screenshots, the web font files, and the official logos, so Claude can see the standards rather than take your word for them. Claude cannot keep these between sessions, so this is a per session step.</p>
+      <p><b>On the fonts:</b> Tiempos Text and National 2 are the standard typefaces. Georgia and Arial are Microsoft availability fallbacks only, used when the real fonts are not installed. Uploading the real files is what stops Claude from quietly shipping the fallback.</p>
     </li>
     <li>
       <h4>Confirm the font check before building</h4>
@@ -124,21 +129,22 @@
     </li>
   </ol>
 
-  <h2 class="sec">For HTML</h2>
+  <h2 class="sec">Telling Claude which fonts to use</h2>
+  <p class="body">One set of instructions covers both channels. Give Claude the files from the pack, say which channel you are building for, and it handles the rest.</p>
   <ul class="list">
-    <li>The woff2 files go in a <code>/fonts</code> folder and are referenced with <code>@font-face</code> using <b>relative paths</b>. Declare the families exactly as <code>Tiempos Text</code> and <code>National 2</code>.</li>
-    <li><b>Mind the path depth.</b> A page at the repo root points to <code>fonts/</code>. A page in a subfolder points to <code>../fonts/</code>. A wrong depth is the most common reason the real type does not load.</li>
-    <li><b>Preview caveat.</b> A single HTML file opened on its own shows the fallback, because the <code>/fonts</code> folder is not beside it. Once it is hosted, or opened with the fonts folder in place, the real type loads. Do not read the isolated preview as a failure.</li>
-    <li>Have Claude confirm all six woff2 files are referenced, and that the CSS fallback stack lists only Georgia and Arial.</li>
+    <li><b>For HTML,</b> Claude puts the woff2 files in a <code>/fonts</code> folder and wires them up with <code>@font-face</code> using relative paths.</li>
+    <li><b>For PowerPoint,</b> Claude needs the .ttf or .otf files instead, because PowerPoint cannot use woff2. It repoints the theme fonts and embeds them in the file so the deck renders correctly for whoever opens it.</li>
+    <li><b>Either way,</b> ask Claude to confirm the fonts are actually referenced or embedded before you call it done.</li>
   </ul>
+  <p class="body"><span class="muted">One thing that looks like a bug and is not: a single HTML file opened on its own shows the fallback fonts, because the fonts folder is not sitting next to it. Once it is hosted, the real type loads.</span></p>
 
-  <h2 class="sec">For PowerPoint</h2>
+  <h2 class="sec">Using the logo</h2>
+  <p class="body">The official logos are in the pack, so there is no reason to improvise one. Upload the file you need along with the fonts and screenshots.</p>
   <ul class="list">
-    <li>Give Claude the <code>.potx</code> template and the <b>.ttf or .otf</b> font files. PowerPoint embeds TrueType and OpenType, not woff2, so the format matters here.</li>
-    <li>Claude repoints the deck's theme fonts to <b>Tiempos Text for headings</b> and <b>National 2 for body</b>, and swaps any explicit Georgia or Arial references in the template.</li>
-    <li><b>Embed the fonts in the file.</b> This is what makes it render correctly for anyone who opens it, installed or not. Without embedding, recipients fall back to Georgia and Arial.</li>
-    <li>Claude also handles the fiddly template repackaging, such as correcting the <code>.potx</code> content type so the saved <code>.pptx</code> opens cleanly. You do not have to do that by hand.</li>
-    <li>Ask Claude to verify the text of the finished deck so nothing was dropped in the edit.</li>
+    <li><b>Pick the lockup to fit the space.</b> Primary is horizontal and is the default for page headers. Stacked suits square or vertical placements. The wordmark alone is for tight spaces.</li>
+    <li><b>Pick the color to fit the background.</b> Graphite or vital orange on light backgrounds, white on dark or orange ones.</li>
+    <li><b>Use SVG on screen</b> so it stays sharp at any size. The PNGs are print resolution and are better suited to PowerPoint.</li>
+    <li><b>Do not alter the mark.</b> No recoloring, stretching, or redrawing, and do not crop the tree out of a lockup to make a standalone icon. Keep clear space around it.</li>
   </ul>
 
   <h2 class="sec">Paste this into your Claude project</h2>
@@ -168,7 +174,7 @@ ACCESSIBILITY
 All text meets WCAG AA contrast against its background. Vital Orange on white only for large text, about 24px or 18.66px bold. Small text never sits directly on orange; place it in a white box. Text on an orange background is white. Focus rings use Action Blue.
 
 LOGO
-Use the official Elsevier logo and Non Solus mark. Do not recolor, distort, or recreate it. If the asset is not available, use a plain text stand in and flag it.
+Use the official logo files from the brand pack. Primary lockup for horizontal space, stacked for square or vertical, wordmark alone for tight spaces. Graphite or vital orange on light backgrounds, white on dark or orange. SVG on screen, PNG for PowerPoint. Do not recolor, stretch, redraw, or crop the mark, and keep clear space around it.
 
 VERIFY BEFORE DELIVERY
 Confirm fonts are present and referenced or embedded, check AA contrast on every text and background pair, and keep orange to an accent, Action Blue to interactive, and Ivory to lines.</pre>
@@ -177,6 +183,7 @@ Confirm fonts are present and referenced or embedded, check AA contrast on every
   <ul class="list">
     <li>Brand brief is in the project instructions.</li>
     <li>Font files uploaded this session: woff2 for HTML, or .ttf and .otf for PowerPoint.</li>
+    <li>Logo file uploaded if the build needs one, in the right lockup and color.</li>
     <li>Font check confirmed before the build starts.</li>
     <li>Output verified: AA contrast, fonts referenced or embedded, color rules held.</li>
     <li>HTML: fonts in <code>/fonts</code> with correct relative path depth. PowerPoint: fonts embedded.</li>
@@ -202,7 +209,7 @@ Confirm fonts are present and referenced or embedded, check AA contrast on every
 
   <div class="footer">
     <a href="../index.html">Home</a>
-    <a href="../showcase/index.html">The showcase</a>
+    <a href="../showcase/index.html">The basics of GitHub</a>
     <a href="../hosting-steps/index.html">Hosting steps</a>
   </div>
 

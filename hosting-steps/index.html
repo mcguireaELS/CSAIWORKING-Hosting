@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Host an HTML product on GitHub Pages</title>
+<link rel="icon" href="../logos/elsevier-favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="../logos/elsevier-favicon.png">
+<link rel="apple-touch-icon" href="../logos/elsevier-favicon.png">
 <style>
   @font-face{font-family:"Tiempos Text";src:url("../fonts/tiempos-text-regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
   @font-face{font-family:"Tiempos Text";src:url("../fonts/tiempos-text-regular-italic.woff2") format("woff2");font-weight:400;font-style:italic;font-display:swap}
@@ -26,30 +29,31 @@
   .wrap{max-width:820px;margin:0 auto;padding:56px 32px 90px}
 
   .topline{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--ivory);padding-bottom:16px;margin-bottom:44px}
-  .wordmark{font-weight:700;font-size:17px;color:var(--graphite)}
+  .wordmark{display:flex;align-items:center}
+  .wordmark img{display:block;height:32px;width:auto}
   .backlink{font-size:14px;letter-spacing:0}
 
-  .eyebrow{font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink);display:flex;align-items:center;gap:12px;margin-bottom:18px}
+  .eyebrow{font-weight:700;font-size:13px;letter-spacing:-0.02em;color:var(--ink);display:flex;align-items:center;gap:12px;margin-bottom:18px}
   .eyebrow .rule{width:34px;height:2px;background:var(--vital-orange)}
   h1{font-family:var(--serif);font-weight:400;font-size:clamp(34px,5vw,52px);line-height:1.05;max-width:18ch;margin-bottom:20px}
-  h1 em{font-style:italic;color:var(--vital-orange)}
+  h1 em{font-style:italic}
   .lede{font-size:19px;color:var(--ink);max-width:60ch;margin-bottom:14px}
 
   .callout{background:var(--sand);border-radius:12px;padding:22px 26px;margin:34px 0;max-width:64ch}
-  .callout h2{font-family:var(--sans);font-weight:700;font-size:15px;text-transform:uppercase;letter-spacing:0.05em;color:var(--ink);margin-bottom:8px}
+  .callout h2{font-family:var(--sans);font-weight:700;font-size:15px;letter-spacing:-0.02em;color:var(--ink);margin-bottom:8px}
   .callout p{font-size:16px;color:var(--graphite)}
 
   .prereq{display:flex;gap:14px;flex-wrap:wrap;margin:30px 0 10px}
   .chip{font-size:14px;font-weight:700;letter-spacing:0;background:var(--white);border:1px solid var(--ivory);border-radius:999px;padding:8px 16px;color:var(--graphite)}
 
-  h3.sec{font-family:var(--sans);font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:0.06em;color:var(--ink);margin:48px 0 8px;padding-top:22px;border-top:1px solid var(--ivory)}
+  h3.sec{font-family:var(--sans);font-weight:700;font-size:14px;letter-spacing:-0.02em;color:var(--ink);margin:48px 0 8px;padding-top:22px;border-top:1px solid var(--ivory)}
 
   ol.steps{list-style:none;counter-reset:step;margin-top:20px}
   ol.steps > li{position:relative;padding-left:74px;margin-bottom:34px;min-height:52px}
   ol.steps > li::before{
     counter-increment:step;content:counter(step,decimal-leading-zero);
     position:absolute;left:0;top:-6px;
-    font-family:var(--serif);font-size:40px;color:var(--vital-orange);line-height:1;
+    font-family:var(--serif);font-size:40px;color:var(--ink);line-height:1;
   }
   ol.steps h4{font-family:var(--sans);font-weight:700;font-size:20px;letter-spacing:-0.02em;margin-bottom:8px;color:var(--graphite)}
   ol.steps p{font-size:16.5px;color:var(--graphite);max-width:60ch;margin-bottom:8px}
@@ -77,8 +81,8 @@
 <div class="wrap">
 
   <div class="topline">
-    <div class="wordmark">Elsevier</div>
-    <a class="backlink" href="../showcase/index.html">&larr; Back to the showcase</a>
+    <div class="wordmark"><img src="../logos/elsevier-primary-graphite.svg" alt="Elsevier"></div>
+    <a class="backlink" href="../index.html">&larr; Back to home</a>
   </div>
 
   <span class="eyebrow"><span class="rule"></span>Customer Success AI Working Group</span>
@@ -91,10 +95,19 @@
   </div>
 
   <div class="prereq">
-    <span class="chip">GitHub access (we already have it)</span>
+    <span class="chip">A GitHub account on the Elsevier org</span>
     <span class="chip">Your index.html</span>
     <span class="chip">About 5 minutes</span>
   </div>
+
+  <h3 class="sec">Before you start: getting access</h3>
+  <p class="body" style="font-size:16.5px;color:var(--graphite);max-width:62ch;margin-bottom:14px">If you do not have a GitHub account on the Elsevier organization yet, request one first. It is a TechDesk ticket, and you will need your science domain username.</p>
+  <ul class="gotchas">
+    <li><b>Raise the ticket:</b> <a href="https://techdesk.elsevier.net/support/catalog/items/769">GitHub, Invite User To Organization</a> in the TechDesk service catalog.</li>
+    <li><b>Full documentation:</b> <a href="https://elsevier.atlassian.net/wiki/spaces/TIOCE/pages/88608095811/Onboarding+to+the+Elsevier+GitHub+Enterprise">Onboarding to the Elsevier GitHub Enterprise</a> on Confluence.</li>
+    <li><b>Sign out of any personal GitHub account first.</b> If you are still signed in to a personal account when you accept the invite, you can end up linking that personal account to Elsevier, where colleagues can see your other activity.</li>
+    <li><b>Watch the timing.</b> The ticket resolves in a few minutes, but the GitHub invite can take about two hours to arrive, and an unaccepted invite expires after three days.</li>
+  </ul>
 
   <h3 class="sec">The steps</h3>
   <ol class="steps">
@@ -132,8 +145,9 @@
   </ul>
 
   <div class="footer">
-    <a href="../showcase/index.html">The showcase</a>
-    <a href="https://github.com/mcguireaELS/CSAIWORKING-Hosting">Repository home</a>
+    <a href="../index.html">Home</a>
+    <a href="../showcase/index.html">The basics of GitHub</a>
+    <a href="../branding/index.html">Branding with Claude</a>
   </div>
 
 </div>

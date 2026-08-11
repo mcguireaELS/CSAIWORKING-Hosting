@@ -7,9 +7,11 @@ This repository hosts the materials from the AI Working Group showcase: a brande
 | Piece | Path | What it is |
 | --- | --- | --- |
 | Landing page | `/index.html` | Home page linking to the showcase and hosting steps |
-| The showcase | `/showcase/` | Branded slide style presentation given to the AI Working Group |
+| The basics of GitHub | `/showcase/` | Branded walkthrough of hosting, use cases, and why GitHub |
 | Hosting steps | `/hosting-steps/` | One page guide to hosting an HTML product on GitHub Pages |
 | Branding with Claude | `/branding/` | Workflow for consistent on-brand HTML and PowerPoint from Claude |
+| Brand pack | `/assets/` | Downloadable zip of brand screenshots and web fonts |
+| Logos | `/logos/` | Official Elsevier logo SVGs used in the page headers |
 | Brand fonts | `/fonts/` | The six Elsevier web fonts (woff2), referenced by relative paths |
 
 ## Live site
@@ -17,7 +19,7 @@ This repository hosts the materials from the AI Working Group showcase: a brande
 Served from the address shown in `Settings > Pages`. Replace the base below with your actual Pages URL if it differs.
 
 - Home: `https://mcguireaels.github.io/CSAIWORKING-Hosting/`
-- Showcase: `https://mcguireaels.github.io/CSAIWORKING-Hosting/showcase/`
+- The basics of GitHub: `https://mcguireaels.github.io/CSAIWORKING-Hosting/showcase/`
 - Hosting steps: `https://mcguireaels.github.io/CSAIWORKING-Hosting/hosting-steps/`
 - Branding guidance: `https://mcguireaels.github.io/CSAIWORKING-Hosting/branding/`
 
@@ -28,11 +30,16 @@ Served from the address shown in `Settings > Pages`. Replace the base below with
 |- index.html            landing page linking to the pages
 |- README.md             this file
 |- showcase/
-|  |- index.html         the presentation
+|  |- index.html         the basics of GitHub
 |- hosting-steps/
 |  |- index.html         the hosting one pager
 |- branding/
 |  |- index.html         the branding reference
+|- logos/
+|  |- elsevier-primary-graphite.svg
+|  |- elsevier-wordmark-graphite.svg
+|  |- elsevier-primary-white.svg
+|  |- elsevier-favicon.svg
 |- fonts/
    |- tiempos-text-regular.woff2
    |- tiempos-text-regular-italic.woff2
@@ -64,6 +71,6 @@ The reusable pattern: build a product in Claude, host it here, share one link, a
 
 The two families are Tiempos Text (serif, headlines) and National 2 (sans serif, body and UI). They are provided as woff2 web fonts in `/fonts`, wired with `@font-face` and relative paths. Public hosting of these files is cleared by brand and legal. The sanctioned fallback stacks are Georgia for the serif and Arial for the sans serif.
 
-## Note on the logo
+## Logo
 
-The page headers currently show a placeholder text wordmark. Swap in the official Elsevier logo and Non Solus mark before any external use.
+The page headers use the official Elsevier primary lockup in graphite, served as SVG from `/logos/`. The full logo set, all three lockups in graphite, vital orange, and white, as SVG and PNG, is in the brand pack under `/assets/`.

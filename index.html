@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Customer Success AI Working Group: showcase and hosting</title>
+<link rel="icon" href="logos/elsevier-favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="logos/elsevier-favicon.png">
+<link rel="apple-touch-icon" href="logos/elsevier-favicon.png">
 <style>
   /* ---------- Elsevier brand web fonts (root level: fonts/ , no ../) ---------- */
   @font-face{font-family:"Tiempos Text";src:url("fonts/tiempos-text-regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
@@ -27,15 +30,16 @@
   }
 
   .topline{display:flex;align-items:center;justify-content:space-between;padding:20px 40px;border-bottom:1px solid var(--ivory)}
-  .wordmark{font-weight:700;font-size:18px;color:var(--graphite)}
+  .wordmark{display:flex;align-items:center}
+  .wordmark img{display:block;height:32px;width:auto}
   .kicker{font-size:12px;color:var(--ink);letter-spacing:0.02em}
 
   main{flex:1 1 auto;width:100%;max-width:900px;margin:0 auto;padding:8vh 32px 40px}
 
   .accent{width:52px;height:3px;background:var(--vital-orange);margin-bottom:26px}
-  .eyebrow{font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink);margin-bottom:16px}
+  .eyebrow{font-weight:700;font-size:13px;letter-spacing:-0.02em;color:var(--ink);margin-bottom:16px}
   h1{font-family:var(--serif);font-weight:400;font-size:clamp(36px,5.4vw,64px);line-height:1.03;max-width:16ch}
-  h1 em{font-style:italic;color:var(--vital-orange)}
+  h1 em{font-style:italic}
   .sub{font-size:clamp(16px,1.7vw,20px);color:var(--ink);margin-top:22px;max-width:52ch}
 
   .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:22px;margin-top:52px}
@@ -47,7 +51,7 @@
   }
   .card:hover{border-color:var(--action-blue);transform:translateY(-2px);box-shadow:0 10px 30px rgba(30,30,30,.07)}
   .card:focus-visible{outline:3px solid var(--action-blue);outline-offset:3px}
-  .card .label{font-family:var(--sans);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.06em;color:var(--ink);margin-bottom:14px}
+  .card .label{font-family:var(--sans);font-weight:700;font-size:13px;letter-spacing:-0.02em;color:var(--ink);margin-bottom:14px}
   .card h2{font-family:var(--serif);font-weight:400;font-size:29px;line-height:1.08;margin-bottom:12px;color:var(--graphite)}
   .card p{font-size:16px;color:var(--ink);margin-bottom:26px;flex:1 1 auto}
   .card .go{display:inline-flex;align-items:center;gap:9px;font-family:var(--sans);font-weight:700;font-size:16px;color:var(--action-blue);letter-spacing:0}
@@ -71,7 +75,7 @@
 <body>
 
   <div class="topline">
-    <div class="wordmark">Elsevier</div>
+    <div class="wordmark"><img src="logos/elsevier-primary-graphite.svg" alt="Elsevier"></div>
     <span class="kicker">Customer Success AI Working Group</span>
   </div>
 
@@ -83,10 +87,10 @@
 
     <div class="cards">
       <a class="card" href="showcase/index.html">
-        <span class="label">Presentation</span>
-        <h2>The showcase</h2>
-        <p>The ten minute walkthrough: from a Claude build to a hosted, testable product.</p>
-        <span class="go">Open the showcase <span class="arrow">&rarr;</span></span>
+        <span class="label">Start here</span>
+        <h2>The basics of GitHub</h2>
+        <p>What hosting means, what you could put on it, and why we use GitHub.</p>
+        <span class="go">Open the basics <span class="arrow">&rarr;</span></span>
       </a>
       <a class="card" href="hosting-steps/index.html">
         <span class="label">Guide</span>

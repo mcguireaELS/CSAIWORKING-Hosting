@@ -3,7 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Showcase: from a Claude build to a hosted, testable product</title>
+<title>The basics of GitHub</title>
+<link rel="icon" href="../logos/elsevier-favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="../logos/elsevier-favicon.png">
+<link rel="apple-touch-icon" href="../logos/elsevier-favicon.png">
 <style>
   /* ---------- Elsevier brand web fonts (served from repo /fonts) ---------- */
   @font-face{font-family:"Tiempos Text";src:url("../fonts/tiempos-text-regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
@@ -45,9 +48,12 @@
     padding:18px 40px;border-bottom:1px solid var(--ivory);
     flex:0 0 auto;
   }
-  .wordmark{font-family:var(--sans);font-weight:700;font-size:18px;letter-spacing:-0.02em;color:var(--graphite)}
+  .wordmark{display:flex;align-items:center}
+  .wordmark img{display:block;height:32px;width:auto}
   .topbar-right{display:flex;align-items:center;gap:18px}
   .kicker{font-family:var(--sans);font-size:12px;color:var(--ink);letter-spacing:0.02em}
+  .homelink{font-family:var(--sans);font-weight:700;font-size:14px;letter-spacing:0;color:var(--action-blue);text-decoration:none;border-bottom:1px solid rgba(35,84,255,.35)}
+  .homelink:hover{border-bottom-color:var(--action-blue)}
 
   .stage{position:relative;flex:1 1 auto;overflow:hidden}
 
@@ -64,16 +70,16 @@
   .eyebrow{
     display:inline-flex;align-items:baseline;gap:12px;
     font-family:var(--sans);font-weight:700;font-size:14px;
-    text-transform:uppercase;letter-spacing:0.08em;color:var(--ink);
+    letter-spacing:-0.02em;color:var(--ink);
     margin-bottom:22px;
   }
   .eyebrow .num{
-    font-family:var(--sans);font-weight:700;font-size:14px;color:var(--vital-orange);
+    font-family:var(--sans);font-weight:700;font-size:14px;color:var(--ink);
   }
 
   h1.title{font-family:var(--serif);font-weight:400;font-size:clamp(38px,6.2vw,84px);line-height:1.02;color:var(--graphite);max-width:16ch}
   h2.head{font-family:var(--serif);font-weight:400;font-size:clamp(30px,4.6vw,60px);line-height:1.06;color:var(--graphite);max-width:20ch}
-  .head em,.title em{font-style:italic;color:var(--vital-orange)}
+  .head em,.title em{font-style:italic}
 
   .sub{font-family:var(--sans);font-weight:400;font-size:clamp(16px,1.7vw,21px);color:var(--ink);margin-top:26px;max-width:46ch;line-height:1.5}
   .definition{font-family:var(--sans);font-weight:400;font-size:clamp(17px,1.9vw,23px);color:var(--graphite);margin-top:30px;max-width:58ch;line-height:1.5}
@@ -87,16 +93,15 @@
   .points li b{font-family:var(--sans);font-weight:700}
   .points li .muted{color:var(--ink)}
 
-  /* two-column compare block (email/sharepoint vs hosting) */
-  .compare{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:34px;max-width:74ch}
-  .card{border:1px solid var(--ivory);border-radius:12px;padding:24px 26px;background:var(--white)}
-  .card.host{border-color:var(--vital-orange);border-width:2px}
-  .card h3{font-family:var(--sans);font-weight:700;font-size:15px;text-transform:uppercase;letter-spacing:0.06em;color:var(--ink);margin-bottom:14px}
-  .card.host h3{color:var(--ink)}
-  .card ul{list-style:none;display:flex;flex-direction:column;gap:11px}
-  .card li{font-size:16px;line-height:1.45;color:var(--graphite);padding-left:20px;position:relative}
-  .card li::before{content:"";position:absolute;left:0;top:.6em;width:7px;height:7px;border-radius:50%;background:var(--sand)}
-  .card.host li::before{background:var(--vital-orange)}
+  /* two-column this-versus-that comparison (no boxes, nothing reads as clickable) */
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:34px;max-width:78ch}
+  .col{padding:0 30px 0 0}
+  .col.host{padding:0 0 0 30px;border-left:1px solid var(--ivory)}
+  .col h3{font-family:var(--sans);font-weight:700;font-size:15px;letter-spacing:-0.02em;color:var(--ink);margin-bottom:16px}
+  .col ul{list-style:none;display:flex;flex-direction:column;gap:13px}
+  .col li{font-size:16px;line-height:1.45;color:var(--graphite);padding-left:20px;position:relative}
+  .col li::before{content:"";position:absolute;left:0;top:.6em;width:7px;height:7px;border-radius:50%;background:var(--sand)}
+  .col.host li::before{background:var(--vital-orange)}
 
   /* live-demo call slide */
   .demo-cue{margin-top:30px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
@@ -139,7 +144,7 @@
   .counter{font-family:var(--sans);font-size:13px;color:var(--ink);min-width:64px;text-align:center;letter-spacing:0}
   .notesbtn{font-family:var(--sans);font-weight:700;font-size:13px;color:var(--ink);background:none;border:none;cursor:pointer;letter-spacing:0.02em}
   .notesbtn:hover{color:var(--graphite)}
-  .notesbtn[aria-pressed="true"]{color:var(--vital-orange)}
+  .notesbtn[aria-pressed="true"]{color:var(--action-blue)}
 
   /* presenter notes drawer */
   .notes{
@@ -151,7 +156,7 @@
   }
   .notes.open{transform:none}
   .notes-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-  .notes h4{font-family:var(--sans);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:0.08em;color:var(--sand)}
+  .notes h4{font-family:var(--sans);font-weight:700;font-size:12px;letter-spacing:-0.02em;color:var(--sand)}
   .notes-close{font-family:var(--sans);font-weight:700;font-size:13px;letter-spacing:0.02em;color:var(--sand);background:none;border:1px solid rgba(255,255,255,.28);border-radius:6px;padding:6px 13px;cursor:pointer;transition:color .18s ease,border-color .18s ease}
   .notes-close:hover{color:var(--white);border-color:rgba(255,255,255,.6)}
   .notes p{font-size:15px;line-height:1.55;color:var(--white);max-width:90ch;margin-bottom:8px}
@@ -165,7 +170,9 @@
 
   @media (max-width:760px){
     .slide{padding:5vh 7vw}
-    .compare{grid-template-columns:1fr;gap:16px}
+    .compare{grid-template-columns:1fr;gap:26px}
+    .col{padding:0}
+    .col.host{padding:26px 0 0 0;border-left:none;border-top:1px solid var(--ivory)}
     .topbar,.controls{padding-left:20px;padding-right:20px}
     .hint{display:none}
     .notes{padding-left:20px;padding-right:20px;max-height:55vh}
@@ -183,8 +190,9 @@
 <div class="deck" role="application" aria-label="AI showcase presentation">
 
   <div class="topbar">
-    <div class="wordmark">Elsevier</div>
+    <div class="wordmark"><img src="../logos/elsevier-primary-graphite.svg" alt="Elsevier"></div>
     <div class="topbar-right">
+      <a class="homelink" href="../index.html">&larr; Home</a>
       <span class="kicker">Customer Success AI Working Group</span>
     </div>
   </div>
@@ -198,37 +206,53 @@
       <span class="eyebrow"><span class="num">01</span>What hosting means</span>
       <h2 class="head">A file travels. A <em>hosted</em> page has an address</h2>
       <div class="compare">
-        <div class="card">
-          <h3>Emailing a file &middot; SharePoint</h3>
+        <div class="col">
+          <h3>If you email it or use SharePoint</h3>
           <ul>
-            <li>Everyone holds a separate, frozen copy. Fix it and you resend and hope.</li>
-            <li>Interactive HTML, fonts, video and tracking get stripped, blocked, or forced to download.</li>
-            <li>SharePoint stores documents behind our login. You cannot hand it to an outside customer.</li>
+            <li>Everyone ends up with their own copy. Change it and you have to send it again and hope people open the new one.</li>
+            <li>SharePoint usually just downloads the file instead of opening it as a page.</li>
+            <li>If the person does not have the company fonts installed, they see a converted version, not the branded one.</li>
+            <li>It sits behind our login, so you cannot give it to a customer.</li>
           </ul>
         </div>
-        <div class="card host">
-          <h3>Hosting the page</h3>
+        <div class="col host">
+          <h3>If you host it</h3>
           <ul>
-            <li>One live version. Improve it and the link everyone has now shows the new one.</li>
-            <li>It actually runs, in any browser, on any device, with no download.</li>
-            <li>A public address you can share with anyone, inside or outside Elsevier.</li>
-            <li>The brand fonts upload alongside it, so it renders in the real Tiempos and National 2, not a fallback.</li>
+            <li>There is one copy. Change it and the link everyone already has shows the new version.</li>
+            <li>It opens as a real page, in any browser, on any device, with nothing to download.</li>
+            <li>The fonts sit next to the page, so everyone sees the real Tiempos and National 2.</li>
+            <li>It is a normal web address, so you can share it with anyone, inside or outside Elsevier.</li>
           </ul>
         </div>
       </div>
       <p class="takeaway">Email and SharePoint move a file around. Hosting gives the thing a home and a front door.</p>
     </section>
 
-    <!-- 2 BEYOND A WIREFRAME -->
-    <section class="slide" data-notes="Draw the line clearly. A wireframe is a sketch meant for us to react to internally. This is not that, it is a working branded product a real customer can use start to finish. Why hosting unlocks testing: it is live at a link so I can put it in front of real pilot users including outside customers, and it is instrumented, it sends interaction data by xAPI to a learning record store so I can see where people click, how far they get, where they drop off. Hosted plus instrumented equals real data, not opinions about a mockup. Tie to roadmap: this is the vehicle for our pilot, early to mid September, and the hosting is what makes it measurable.">
-      <span class="eyebrow"><span class="num">02</span>Beyond a wireframe</span>
-      <h2 class="head">This is not a mockup. It is built for <em>testing</em></h2>
-      <ul class="points">
-        <li><b>Real users, real link.</b> <span class="muted">Because it is live, I can put it in front of pilot users, including customers outside Elsevier.</span></li>
-        <li><b>It is instrumented.</b> <span class="muted">It sends interaction data by xAPI to a learning record store: where people click, how far they get, where they drop off.</span></li>
-        <li><b>Data, not opinions.</b> <span class="muted">Hosted plus instrumented gives real usability and engagement data, not reactions to a sketch.</span></li>
-        <li><b>The pilot vehicle.</b> <span class="muted">Targeted for early to mid September. Hosting is what makes the pilot measurable.</span></li>
-      </ul>
+    <!-- 2 WHAT YOU COULD HOST -->
+    <section class="slide" data-notes="This answers the question people are actually asking, which is what would I put on it. Do not read the list, pick two that fit the room. The sweet spot is self contained, interactive, shareable by link, no confidential data, nothing that needs a login or a database. Customer facing: self service onboarding for accounts with no CSM, getting started walkthroughs for a new feature sent as one link instead of an attachment, release highlight pages, quick reference and search tips people can bookmark, decision trees, and value calculators where the math runs in the browser and nothing is stored. Internal: playbooks and process guides like these pages, new hire and new CSM onboarding, interactive checklists, a shared prompt library for the group, and a team resource index. The ones worth doing first are the measurable ones, because anything you can instrument gives you real engagement data instead of a guess. Keep off it: nothing confidential or patient related, since these repos are public, and nothing that needs a login, a database, or to save what someone types. Surveys need a real form tool.">
+      <span class="eyebrow"><span class="num">02</span>What you could host</span>
+      <h2 class="head">So what would you actually <em>put</em> on it</h2>
+      <div class="compare">
+        <div class="col">
+          <h3>Customer facing</h3>
+          <ul>
+            <li>Self service onboarding for accounts with no dedicated CSM</li>
+            <li>Getting started walkthroughs for a new feature, sent as one link</li>
+            <li>Release highlights, as a page instead of a wall of email</li>
+            <li>Quick reference guides, decision trees, and value calculators</li>
+          </ul>
+        </div>
+        <div class="col host">
+          <h3>Internal</h3>
+          <ul>
+            <li>Playbooks and process guides, one link per workflow</li>
+            <li>New hire and new CSM onboarding hubs</li>
+            <li>A shared library of prompts the group has vetted</li>
+            <li>A team index linking everything we host</li>
+          </ul>
+        </div>
+      </div>
+      <p class="takeaway">Start with the ones you can measure. Anything you can instrument tells you what people actually did</p>
     </section>
 
     <!-- 3 WHAT IS GIT -->
@@ -265,7 +289,7 @@
     </section>
 
     <!-- 6 CLOSE -->
-    <section class="slide" data-notes="Short version: Claude built it, hosting made it real, GitHub was the tool we already had, and now it is testable with actual users. If you have an HTML product you want in front of people, come find me and I will walk you through the hosting piece. Optional: take one or two questions.">
+    <section class="slide" data-notes="Short version: Claude built it, hosting made it real, GitHub was the tool we already had, and now it is testable with actual learners. If you have an HTML product you want in front of people, come find me and I will walk you through the hosting piece. Optional: take one or two questions.">
       <span class="eyebrow"><span class="num">06</span>Close</span>
       <h2 class="head">Claude built it. Hosting made it <em>real</em></h2>
       <p class="sub">If you have an HTML product you want in front of people, come find me and I will walk you through the hosting piece. The steps are written up so you can do it yourself.</p>
