@@ -8,7 +8,7 @@ This repository hosts the materials from the AI Working Group showcase: a brande
 | --- | --- | --- |
 | Landing page | `/index.html` | Home page linking to the showcase and hosting steps |
 | The basics of GitHub | `/showcase/` | Branded walkthrough of hosting, use cases, and why GitHub |
-| Hosting steps | `/hosting-steps/` | One page guide to hosting an HTML product on GitHub Pages |
+| Hosting steps | `/hosting-steps/` | Guide to hosting on GitHub Pages, from access through updating and presenting |
 | Branding with Claude | `/branding/` | Workflow for consistent on-brand HTML and PowerPoint from Claude |
 | Brand pack | `/assets/` | Downloadable zip of brand screenshots and web fonts |
 | Logos | `/logos/` | Official Elsevier logo SVGs used in the page headers |

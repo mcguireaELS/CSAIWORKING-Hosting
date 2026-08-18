@@ -62,6 +62,33 @@
   code{font-family:"National 2",Arial,monospace;font-weight:700;background:var(--white);border:1px solid var(--ivory);border-radius:5px;padding:1px 7px;font-size:0.92em;letter-spacing:0}
   .path{display:inline-block;background:var(--white);border:1px solid var(--ivory);border-radius:6px;padding:6px 12px;font-size:14px;letter-spacing:0;margin-top:4px;color:var(--graphite)}
 
+  p.body{font-size:16.5px;color:var(--graphite);max-width:62ch;margin-bottom:14px}
+  p.body .muted{color:var(--ink)}
+
+  .toc{margin:26px 0 4px;display:flex;flex-wrap:wrap;gap:9px 22px;max-width:68ch}
+  .toc a{font-size:15px;letter-spacing:0}
+
+  .callout.key{background:var(--white);border:1px solid var(--ivory);border-left:3px solid var(--vital-orange)}
+
+  .task{margin-bottom:26px;max-width:64ch}
+  .task h4{font-family:var(--sans);font-weight:700;font-size:18px;letter-spacing:-0.02em;color:var(--graphite);margin-bottom:7px}
+  .task p{font-size:16.5px;color:var(--graphite);margin-bottom:6px}
+  .task p .muted{color:var(--ink)}
+  .clickpath{display:inline-block;background:var(--white);border:1px solid var(--ivory);border-radius:6px;padding:7px 13px;font-size:14.5px;letter-spacing:0;color:var(--graphite);margin:3px 0 8px}
+
+  .patterns{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:22px;max-width:76ch}
+  .pattern{padding-right:30px}
+  .pattern+.pattern{padding:0 0 0 30px;border-left:1px solid var(--ivory)}
+  .pattern h4{font-family:var(--sans);font-weight:700;font-size:18px;letter-spacing:-0.02em;color:var(--graphite);margin-bottom:8px}
+  .pattern p{font-size:16px;color:var(--graphite);margin-bottom:10px}
+  .pattern .tree{font-size:14px;letter-spacing:0;color:var(--ink);background:var(--white);border:1px solid var(--ivory);border-radius:8px;padding:12px 14px;white-space:pre;overflow-x:auto}
+
+  @media (max-width:680px){
+    .patterns{grid-template-columns:1fr}
+    .pattern{padding:0}
+    .pattern+.pattern{padding:26px 0 0 0;border-left:none;border-top:1px solid var(--ivory)}
+  }
+
   .gotchas{margin-top:14px;list-style:none}
   .gotchas li{position:relative;padding-left:24px;font-size:16px;margin-bottom:12px;max-width:62ch;color:var(--graphite)}
   .gotchas li::before{content:"";position:absolute;left:0;top:.62em;width:9px;height:2px;background:var(--vital-orange)}
@@ -100,8 +127,19 @@
     <span class="chip">About 5 minutes</span>
   </div>
 
-  <h3 class="sec">Before you start: getting access</h3>
-  <p class="body" style="font-size:16.5px;color:var(--graphite);max-width:62ch;margin-bottom:14px">If you do not have a GitHub account on the Elsevier organization yet, request one first. It is a TechDesk ticket, and you will need your science domain username.</p>
+  <nav class="toc">
+    <a href="#access">Getting access</a>
+    <a href="#steps">Your first deploy</a>
+    <a href="#readme">Adding a README</a>
+    <a href="#after">After the first deploy</a>
+    <a href="#organizing">Organizing repositories</a>
+    <a href="#later">Things you can ignore for now</a>
+    <a href="#presenting">Presenting it</a>
+    <a href="#worth-knowing">Worth knowing</a>
+  </nav>
+
+  <h3 class="sec" id="access">Before you start: getting access</h3>
+  <p class="body">If you do not have a GitHub account on the Elsevier organization yet, request one first. It is a TechDesk ticket, and you will need your science domain username.</p>
   <ul class="gotchas">
     <li><b>Raise the ticket:</b> <a href="https://techdesk.elsevier.net/support/catalog/items/769">GitHub, Invite User To Organization</a> in the TechDesk service catalog.</li>
     <li><b>Full documentation:</b> <a href="https://elsevier.atlassian.net/wiki/spaces/TIOCE/pages/88608095811/Onboarding+to+the+Elsevier+GitHub+Enterprise">Onboarding to the Elsevier GitHub Enterprise</a> on Confluence.</li>
@@ -109,14 +147,20 @@
     <li><b>Watch the timing.</b> The ticket resolves in a few minutes, but the GitHub invite can take about two hours to arrive, and an unaccepted invite expires after three days.</li>
   </ul>
 
-  <h3 class="sec">The steps</h3>
+  <div class="callout key">
+    <h2>The one that catches everyone: name it index.html</h2>
+    <p>Your main file has to be called <code>index.html</code>, exactly. If it is called anything else, your live link returns a 404 even though the file uploaded fine. This is the single most common reason a new site does not work.</p>
+    <p>The reason is a web convention. When someone visits a folder rather than a specific file, the host looks for <code>index.html</code> and serves that. It is the same index file that sits in the root of an e-learning package.</p>
+  </div>
+
+  <h3 class="sec" id="steps">Your first deploy</h3>
   <ol class="steps">
     <li>
       <h4>Create a repository</h4>
       <p>In GitHub, click <code>New</code>, give the repository a clear name, and set it to <b>Public</b> (GitHub Pages needs public on our plan). Leave the rest default and create it. <span class="muted">A repository is just a folder with a full memory of its own history.</span></p>
     </li>
     <li>
-      <h4>Add your files</h4>
+      <h4>Add your files, with the main one named index.html</h4>
       <p>Use <code>Add file &rarr; Upload files</code> and drag in your <code>index.html</code>. If it uses the brand fonts, upload a <code>fonts</code> folder alongside it so the relative paths resolve. Write a short commit message and click <b>Commit changes</b>.</p>
       <span class="path">/index.html &nbsp;&middot;&nbsp; /fonts/national-2-regular.woff2 &nbsp;&middot;&nbsp; ...</span>
     </li>
@@ -135,9 +179,95 @@
     </li>
   </ol>
 
-  <h3 class="sec">Worth knowing</h3>
+  <h3 class="sec" id="readme">Adding a README</h3>
+  <p class="body">A README is a plain text file that explains what your repository holds. Two reasons to write one. It is standard practice on GitHub, so anyone who opens your repository expects to find it. And GitHub renders it automatically underneath the file list, so it doubles as a quick reference for how the thing is meant to work.</p>
+  <p class="clickpath"><b>Add file</b> &rarr; <b>Create new file</b> &rarr; name it <b>README.md</b> &rarr; write &rarr; <b>Commit changes</b></p>
+  <p class="body">Keep it short. What this is, what is in it, and the live link. If you want the headings and bullets to render, write it in Markdown, which is the <code>.md</code> in the filename. Claude will write the whole thing for you if you ask.</p>
+
+  <h3 class="sec" id="after">After the first deploy</h3>
+  <p class="body">The first deploy is the hard part. These are the things you will do repeatedly afterwards, and none of them are obvious from the interface.</p>
+
+  <div class="task">
+    <h4>Upload a new version</h4>
+    <p class="clickpath"><b>Code</b> tab &rarr; <b>+</b> next to Code &rarr; <b>Upload files</b> &rarr; drag or choose &rarr; <b>Commit changes</b></p>
+    <p>Uploading a file with the same name replaces the old one. You do not need to delete the previous version first.</p>
+  </div>
+
+  <div class="task">
+    <h4>Write a commit message</h4>
+    <p>Every change asks you for a message. For a small fix the default is fine, but for anything significant, write a short line saying what changed. It becomes the history of the page, and it is what you will read months later trying to work out when something broke. <span class="muted">Claude will write one for you if you ask.</span></p>
+  </div>
+
+  <div class="task">
+    <h4>Delete a file</h4>
+    <p class="clickpath">Open the file &rarr; <b>...</b> menu &rarr; <b>Delete file</b> &rarr; <b>Commit changes</b></p>
+    <p>The commit is the part people miss. Nothing actually changes until you commit, so if the file still looks like it is there, that is usually why.</p>
+  </div>
+
+  <div class="task">
+    <h4>Check whether it has published</h4>
+    <p class="clickpath"><b>Actions</b> tab</p>
+    <p>Your page is not live the instant you commit. GitHub runs a short build first, usually under a minute. The Actions tab shows it running, and a green check means it has published. If your change is not showing, look here before you start troubleshooting anything else.</p>
+  </div>
+
+  <div class="task">
+    <h4>Find your live URL</h4>
+    <p class="clickpath"><b>Settings</b> &rarr; <b>Pages</b></p>
+    <p>The address is shown at the top of that page once the site has published for the first time.</p>
+  </div>
+
+  <h3 class="sec" id="organizing">Organizing repositories</h3>
+  <p class="body">There are two sensible patterns, and the right one depends on whether the pieces belong together.</p>
+  <div class="patterns">
+    <div class="pattern">
+      <h4>One repository per project</h4>
+      <p>The default, and the simpler choice. Each thing you build gets its own repository and its own link. Six or seven versions of a model means six or seven repositories.</p>
+      <p>Use this when the pieces are separate deliverables, go to different audiences, or will be updated on their own schedules.</p>
+      <div class="tree">my-project/
+  index.html
+  fonts/</div>
+    </div>
+    <div class="pattern">
+      <h4>One repository as a hub</h4>
+      <p>A landing page at the root, with each sub page in its own folder. Everything shares one link and one set of fonts.</p>
+      <p>Use this when the pieces belong together and you want to hand someone a single address.</p>
+      <div class="tree">my-hub/
+  index.html
+  page-one/
+    index.html
+  page-two/
+    index.html
+  fonts/</div>
+    </div>
+  </div>
+  <p class="body" style="margin-top:20px">Worth being explicit, because it is confusing otherwise: the site you are reading right now is the second pattern. It has a landing page at the root and this guide, the basics, and the branding page each in their own folder. The general advice is still the first pattern. Reach for the hub only when the grouping earns its keep.</p>
+
+  <h3 class="sec" id="later">Things you can ignore for now</h3>
+  <p class="body">Two words you will see in the interface and do not need yet. Here is what they are, so they stop being mysterious, and when they start to matter.</p>
+
+  <div class="task">
+    <h4>Branches</h4>
+    <p>A branch is a parallel copy of your files, so you can work on changes without touching what is live. For a single page you commit straight to <code>main</code>, which is the only branch you have, and that is fine.</p>
+    <p>It starts to matter when someone else is editing the same repository, or when you want to try a substantial change without taking the working version down while you figure it out.</p>
+  </div>
+
+  <div class="task">
+    <h4>Tags</h4>
+    <p>A tag is a bookmark on one specific version, so you can find your way back to it later.</p>
+    <p>It starts to matter when you want to mark a particular version as meaningful, for example the exact one that went into a pilot, so you can return to it after you have moved on.</p>
+  </div>
+
+  <h3 class="sec" id="presenting">Presenting it</h3>
+  <p class="body">When you are showing a page to a room, put the browser in fullscreen first. It hides the tabs, the address bar, and your bookmarks, which is the difference between something that looks like a browser tab and something that looks like a product.</p>
   <ul class="gotchas">
-    <li><b>The entry file must be named</b> <code>index.html</code> <b>to load at the folder root.</b> A page in a subfolder needs its own <code>index.html</code> too.</li>
+    <li><b>Windows:</b> press <code>F11</code>. Press it again to come back out.</li>
+    <li><b>Mac:</b> press <code>Control</code> <code>Command</code> <code>F</code>, or use the green button. <code>Esc</code> exits.</li>
+    <li><b>Either way,</b> open the page and go fullscreen before you share your screen, not after, so nobody watches you rummage through tabs.</li>
+  </ul>
+
+  <h3 class="sec" id="worth-knowing">Worth knowing</h3>
+  <ul class="gotchas">
+    <li><b>Each subfolder needs its own</b> <code>index.html</code> too, for the same reason the root does.</li>
     <li><b>Public only, unless paid.</b> Pages serves from public repositories on our plan. Do not put anything confidential in a public repo.</li>
     <li><b>Give the first deploy a minute.</b> If the live link 404s right away, wait and hard refresh. First builds are the slowest.</li>
     <li><b>Fonts live in a</b> <code>/fonts</code> <b>folder</b> and are referenced with relative paths, so the folder must travel with the HTML.</li>
