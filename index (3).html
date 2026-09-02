@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Branding with Claude</title>
+<link rel="icon" href="../logos/elsevier-favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="../logos/elsevier-favicon.png">
+<link rel="apple-touch-icon" href="../logos/elsevier-favicon.png">
+<style>
+  @font-face{font-family:"Tiempos Text";src:url("../fonts/tiempos-text-regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+  @font-face{font-family:"Tiempos Text";src:url("../fonts/tiempos-text-regular-italic.woff2") format("woff2");font-weight:400;font-style:italic;font-display:swap}
+  @font-face{font-family:"National 2";src:url("../fonts/national-2-regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+  @font-face{font-family:"National 2";src:url("../fonts/national-2-regular-italic.woff2") format("woff2");font-weight:400;font-style:italic;font-display:swap}
+  @font-face{font-family:"National 2";src:url("../fonts/national-2-bold.woff2") format("woff2");font-weight:700;font-style:normal;font-display:swap}
+  @font-face{font-family:"National 2";src:url("../fonts/national-2-bold-italic.woff2") format("woff2");font-weight:700;font-style:italic;font-display:swap}
+
+  :root{
+    --vital-orange:#FF551D;--graphite:#1E1E1E;--white:#FFFFFF;--ink:#544946;
+    --sand:#EEE7D7;--paper:#F7F4EF;--action-blue:#2354FF;--ivory:#E1DFDB;
+    --serif:"Tiempos Text",Georgia,serif;--sans:"National 2",Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);color:var(--graphite);background:var(--paper);letter-spacing:-0.02em;-webkit-font-smoothing:antialiased;line-height:1.5}
+  a{color:var(--action-blue);text-decoration:none;border-bottom:1px solid rgba(35,84,255,.35)}
+  a:hover{border-bottom-color:var(--action-blue)}
+  a:focus-visible{outline:3px solid var(--action-blue);outline-offset:2px;border-radius:3px}
+
+  .wrap{max-width:840px;margin:0 auto;padding:56px 32px 90px}
+
+  .topline{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--ivory);padding-bottom:16px;margin-bottom:44px}
+  .wordmark{display:flex;align-items:center}
+  .wordmark img{display:block;height:32px;width:auto}
+  .backlink{font-size:14px;letter-spacing:0}
+
+  .eyebrow{font-weight:700;font-size:13px;letter-spacing:-0.02em;color:var(--ink);display:flex;align-items:center;gap:12px;margin-bottom:18px}
+  .eyebrow .rule{width:34px;height:2px;background:var(--vital-orange)}
+  h1{font-family:var(--serif);font-weight:400;font-size:clamp(34px,5vw,54px);line-height:1.04;max-width:18ch;margin-bottom:20px}
+  h1 em{font-style:italic;color:var(--vital-orange)}
+  .lede{font-size:19px;color:var(--ink);max-width:64ch}
+
+  h2.sec{font-family:var(--sans);font-weight:700;font-size:14px;letter-spacing:-0.02em;color:var(--ink);margin:54px 0 18px;padding-top:24px;border-top:1px solid var(--ivory)}
+  h3.sub{font-family:var(--sans);font-weight:700;font-size:18px;letter-spacing:-0.02em;color:var(--graphite);margin:28px 0 10px}
+  p.body{font-size:16.5px;color:var(--graphite);max-width:64ch;margin-bottom:14px}
+  p.body .muted{color:var(--ink)}
+
+  /* numbered steps */
+  ol.steps{list-style:none;counter-reset:step;margin:18px 0 8px}
+  ol.steps > li{position:relative;padding-left:74px;margin-bottom:30px;min-height:52px}
+  ol.steps > li::before{counter-increment:step;content:counter(step,decimal-leading-zero);position:absolute;left:0;top:-6px;font-family:var(--serif);font-size:40px;color:var(--vital-orange);line-height:1}
+  ol.steps h4{font-family:var(--sans);font-weight:700;font-size:20px;letter-spacing:-0.02em;margin-bottom:8px;color:var(--graphite)}
+  ol.steps p{font-size:16.5px;color:var(--graphite);max-width:62ch;margin-bottom:8px}
+  ol.steps p .muted{color:var(--ink)}
+
+  /* bullet lists */
+  ul.list{list-style:none;margin:10px 0 6px}
+  ul.list li{position:relative;padding-left:24px;font-size:16.5px;margin-bottom:12px;max-width:64ch;color:var(--graphite)}
+  ul.list li::before{content:"";position:absolute;left:0;top:.62em;width:9px;height:2px;background:var(--vital-orange)}
+  ul.list li b{font-weight:700}
+  ul.list li .muted{color:var(--ink)}
+
+  code{font-family:"National 2",Arial,monospace;font-weight:700;background:var(--white);border:1px solid var(--ivory);border-radius:5px;padding:1px 7px;font-size:0.92em;letter-spacing:0}
+
+  /* callout */
+  .callout{background:var(--sand);border-radius:12px;padding:24px 26px;margin:20px 0 10px;max-width:66ch}
+  .callout h3{font-family:var(--sans);font-weight:700;font-size:16px;letter-spacing:-0.02em;color:var(--graphite);margin-bottom:12px}
+  .callout p{font-size:16px;color:var(--graphite);margin-bottom:12px}
+  .callout p:last-child{margin-bottom:0}
+  .callout .q{font-style:italic}
+
+  /* copyable brief */
+  .briefcap{font-size:15px;color:var(--ink);margin-bottom:12px;max-width:64ch}
+  pre.brief{white-space:pre-wrap;font-family:var(--sans);font-size:14.5px;line-height:1.6;color:var(--graphite);background:var(--white);border:1px solid var(--ivory);border-radius:12px;padding:24px 26px;max-width:72ch;letter-spacing:0;overflow-x:auto}
+
+  /* palette */
+  .palette{display:flex;flex-direction:column;gap:10px;margin:6px 0 20px}
+  .swrow{display:grid;grid-template-columns:52px 1fr;gap:18px;align-items:center;border:1px solid var(--ivory);border-radius:10px;padding:12px 16px;background:var(--white)}
+  .swatch{width:52px;height:52px;border-radius:8px;border:1px solid rgba(30,30,30,.10)}
+  .swinfo{display:grid;grid-template-columns:190px 1fr;gap:14px;align-items:baseline}
+  .swname{font-weight:700;font-size:16px;color:var(--graphite)}
+  .swhex{font-size:13px;color:var(--ink);letter-spacing:0;display:block;margin-top:2px}
+  .swuse{font-size:15px;color:var(--ink)}
+
+  .footer{margin-top:60px;padding-top:22px;border-top:1px solid var(--ivory);font-size:14px;color:var(--ink);letter-spacing:0;display:flex;gap:22px;flex-wrap:wrap}
+
+  @media (max-width:640px){ .swinfo{grid-template-columns:1fr;gap:4px} }
+  @media print{ body{background:var(--white)} a{color:var(--graphite);border:none} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topline">
+    <div class="wordmark"><img src="../logos/elsevier-primary-graphite.svg" alt="Elsevier"></div>
+    <a class="backlink" href="../index.html">&larr; Back to home</a>
+  </div>
+
+  <span class="eyebrow"><span class="rule"></span>Customer Success AI Working Group</span>
+  <h1>Branding with <em>Claude</em></h1>
+  <p class="lede">A repeatable workflow for getting consistent, on-brand HTML and PowerPoint out of Claude. Set it up once in your own Claude instance and you can reproduce these results. The color and type reference is at the bottom.</p>
+
+  <h2 class="sec">Why the setup matters</h2>
+  <p class="body">Claude does not have the licensed brand fonts by default, and a fresh chat starts with no memory of them. Without a small, repeatable setup, branded output drifts: the type quietly falls back to Georgia and Arial, and colors wander off the palette. The steps below close that gap so every branded build lands the same way.</p>
+
+  <div class="callout">
+    <h3>Georgia and Arial are fallbacks, not the standard</h3>
+    <p>This is the trap. The brand's fallback fonts guidance says the fallbacks are <span class="q">"intended only to maintain visual consistency when the primary typefaces are unavailable,"</span> and that they exist because <span class="q">"not all users may have access to the primary fonts."</span></p>
+    <p>The standard typefaces are Tiempos Text and National 2. Georgia and Arial appear only when the real fonts are missing. The whole point of this workflow is to make the real fonts available to Claude, then use them.</p>
+  </div>
+
+  <h2 class="sec">The workflow</h2>
+  <ol class="steps">
+    <li>
+      <h4>Put the brand rules in your Claude project</h4>
+      <p>Paste the brief further down this page into your Claude project's custom instructions. That way every chat in the project starts already knowing the palette, the type rules, the accessibility limits, and the requirement to use the real fonts. <span class="muted">If you do not use projects, paste it at the top of the chat before you ask for anything.</span></p>
+    </li>
+    <li>
+      <h4>Download the brand pack and add it to your prompt</h4>
+      <p><a href="../assets/elsevier-brand-pack.zip">Download the brand pack</a>, unzip it, and upload the contents into your chat before you ask for anything branded. It holds the brand screenshots, the web font files, and the official logos, so Claude can see the standards rather than take your word for them. Claude cannot keep these between sessions, so this is a per session step.</p>
+      <p><b>On the fonts:</b> Tiempos Text and National 2 are the standard typefaces. Georgia and Arial are Microsoft availability fallbacks only, used when the real fonts are not installed. Uploading the real files is what stops Claude from quietly shipping the fallback.</p>
+    </li>
+    <li>
+      <h4>Confirm the font check before building</h4>
+      <p>Ask Claude to confirm the required font files are present in the chat before it builds. If they are missing, it should stop and ask you to upload them, not quietly ship Georgia or Arial. The brief instructs it to do exactly this, but it is worth a glance.</p>
+    </li>
+    <li>
+      <h4>Ask for the build, then have Claude verify</h4>
+      <p>Request the output with the brand applied, then ask Claude to check its own work: WCAG AA contrast on every text and background pair, all the fonts actually referenced or embedded, and the color rules held, orange as a sparing accent, Action Blue for interactive only, Ivory for lines only. <span class="muted">Verifying is quick and catches the drift before it reaches anyone.</span></p>
+    </li>
+  </ol>
+
+  <h2 class="sec">Telling Claude which fonts to use</h2>
+  <p class="body">One set of instructions covers both channels. Give Claude the files from the pack, say which channel you are building for, and it handles the rest.</p>
+  <ul class="list">
+    <li><b>For HTML,</b> Claude puts the woff2 files in a <code>/fonts</code> folder and wires them up with <code>@font-face</code> using relative paths.</li>
+    <li><b>For PowerPoint,</b> Claude needs the .ttf or .otf files instead, because PowerPoint cannot use woff2. It repoints the theme fonts and embeds them in the file so the deck renders correctly for whoever opens it.</li>
+    <li><b>Either way,</b> ask Claude to confirm the fonts are actually referenced or embedded before you call it done.</li>
+  </ul>
+  <p class="body"><span class="muted">One thing that looks like a bug and is not: a single HTML file opened on its own shows the fallback fonts, because the fonts folder is not sitting next to it. Once it is hosted, the real type loads.</span></p>
+
+  <h2 class="sec">Using the logo</h2>
+  <p class="body">The official logos are in the pack, so there is no reason to improvise one. Upload the file you need along with the fonts and screenshots.</p>
+  <ul class="list">
+    <li><b>Pick the lockup to fit the space.</b> Primary is horizontal and is the default for page headers. Stacked suits square or vertical placements. The wordmark alone is for tight spaces.</li>
+    <li><b>Pick the color to fit the background.</b> Graphite or vital orange on light backgrounds, white on dark or orange ones.</li>
+    <li><b>Use SVG on screen</b> so it stays sharp at any size. The PNGs are print resolution and are better suited to PowerPoint.</li>
+    <li><b>Do not alter the mark.</b> No recoloring, stretching, or redrawing, and do not crop the tree out of a lockup to make a standalone icon. Keep clear space around it.</li>
+  </ul>
+
+  <h2 class="sec">Paste this into your Claude project</h2>
+  <p class="briefcap">Select all of the box below and paste it into your Claude project's custom instructions. It encodes the palette, type, accessibility, and font handling, so every branded request starts from the same place.</p>
+  <pre class="brief">Brand: Elsevier. Apply these standards to any branded output.
+
+FONTS (the standard)
+Tiempos Text (serif) for headlines and high impact text, used sparingly. National 2 (sans serif) for body, UI, and long text. Georgia and Arial are availability fallbacks only, used when the primary fonts are not installed. The licensed font files are not built in, so I will upload them each session:
+- For HTML: the six woff2 files. Put them in a /fonts folder, reference with @font-face and relative paths, family names exactly "Tiempos Text" and "National 2", fallback stack Georgia and Arial only.
+- For PowerPoint: the .ttf or .otf files. Repoint theme fonts to Tiempos Text (headings) and National 2 (body), and embed the fonts in the file.
+Before producing any branded output, confirm the required font files are present in this chat. If they are missing, stop and ask me to upload them. Never silently ship Georgia or Arial as the real typeface.
+
+COLORS (official hex, use only these)
+Vital Orange #FF551D: sparing accent only, never body text or large fills.
+Graphite #1E1E1E: foundation and text.
+White #FFFFFF: foundation.
+Ink #544946: secondary text and surfaces.
+Sand #EEE7D7: secondary surface.
+Paper #F7F4EF: page background.
+Action Blue #2354FF: interactive only (links, buttons, focus rings). Digital only.
+Ivory #E1DFDB: lines and dividers only. Digital only.
+
+TYPE RULES
+About negative 2 percent letter spacing. Sentence case for nearly all text. No ending period on headlines or taglines.
+
+ACCESSIBILITY
+All text meets WCAG AA contrast against its background. Vital Orange on white only for large text, about 24px or 18.66px bold. Small text never sits directly on orange; place it in a white box. Text on an orange background is white. Focus rings use Action Blue.
+
+LOGO
+Use the official logo files from the brand pack. Primary lockup for horizontal space, stacked for square or vertical, wordmark alone for tight spaces. Graphite or vital orange on light backgrounds, white on dark or orange. SVG on screen, PNG for PowerPoint. Do not recolor, stretch, redraw, or crop the mark, and keep clear space around it.
+
+VERIFY BEFORE DELIVERY
+Confirm fonts are present and referenced or embedded, check AA contrast on every text and background pair, and keep orange to an accent, Action Blue to interactive, and Ivory to lines.</pre>
+
+  <h2 class="sec">Session checklist</h2>
+  <ul class="list">
+    <li>Brand brief is in the project instructions.</li>
+    <li>Font files uploaded this session: woff2 for HTML, or .ttf and .otf for PowerPoint.</li>
+    <li>Logo file uploaded if the build needs one, in the right lockup and color.</li>
+    <li>Font check confirmed before the build starts.</li>
+    <li>Output verified: AA contrast, fonts referenced or embedded, color rules held.</li>
+    <li>HTML: fonts in <code>/fonts</code> with correct relative path depth. PowerPoint: fonts embedded.</li>
+  </ul>
+
+  <h2 class="sec">Brand basics reference</h2>
+  <p class="body">Use only these colors. Hex values are official.</p>
+  <div class="palette">
+    <div class="swrow"><div class="swatch" style="background:#FF551D"></div><div class="swinfo"><div><span class="swname">Vital Orange</span><span class="swhex">#FF551D &middot; 255, 85, 29</span></div><div class="swuse">Accent only. Not body text, not large fills.</div></div></div>
+    <div class="swrow"><div class="swatch" style="background:#1E1E1E"></div><div class="swinfo"><div><span class="swname">Graphite</span><span class="swhex">#1E1E1E &middot; 30, 30, 30</span></div><div class="swuse">Foundation and text.</div></div></div>
+    <div class="swrow"><div class="swatch" style="background:#FFFFFF"></div><div class="swinfo"><div><span class="swname">White</span><span class="swhex">#FFFFFF &middot; 255, 255, 255</span></div><div class="swuse">Foundation.</div></div></div>
+    <div class="swrow"><div class="swatch" style="background:#544946"></div><div class="swinfo"><div><span class="swname">Ink</span><span class="swhex">#544946 &middot; 84, 73, 70</span></div><div class="swuse">Secondary text and surfaces.</div></div></div>
+    <div class="swrow"><div class="swatch" style="background:#EEE7D7"></div><div class="swinfo"><div><span class="swname">Sand</span><span class="swhex">#EEE7D7 &middot; 238, 231, 215</span></div><div class="swuse">Secondary surface.</div></div></div>
+    <div class="swrow"><div class="swatch" style="background:#F7F4EF"></div><div class="swinfo"><div><span class="swname">Paper</span><span class="swhex">#F7F4EF &middot; 247, 244, 239</span></div><div class="swuse">Page background.</div></div></div>
+    <div class="swrow"><div class="swatch" style="background:#2354FF"></div><div class="swinfo"><div><span class="swname">Action Blue</span><span class="swhex">#2354FF &middot; 35, 84, 255</span></div><div class="swuse">Digital only. Links, buttons, and calls to action only.</div></div></div>
+    <div class="swrow"><div class="swatch" style="background:#E1DFDB"></div><div class="swinfo"><div><span class="swname">Ivory</span><span class="swhex">#E1DFDB &middot; 225, 223, 219</span></div><div class="swuse">Digital only. Lines and dividers only.</div></div></div>
+  </div>
+  <ul class="list">
+    <li><b>Tiempos Text</b> for Header 1 and 2. <b>National 2 Bold</b> for Header 3 to 5. <b>National 2 Regular</b> for body.</li>
+    <li>About negative 2 percent letter spacing, sentence case, no ending period on headlines.</li>
+    <li>Graphite, White, and the warm neutrals are the foundation. Orange accents sparingly. Action Blue interactive only. Ivory for lines only.</li>
+  </ul>
+
+  <div class="footer">
+    <a href="../index.html">Home</a>
+    <a href="../showcase/index.html">The basics of GitHub</a>
+    <a href="../hosting-steps/index.html">Hosting steps</a>
+  </div>
+
+</div>
+</body>
+</html>
