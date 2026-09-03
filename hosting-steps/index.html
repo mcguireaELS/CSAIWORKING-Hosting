@@ -89,6 +89,27 @@
     .pattern+.pattern{padding:26px 0 0 0;border-left:none;border-top:1px solid var(--ivory)}
   }
 
+  details.shot{margin:14px 0 8px}
+  details.shot > summary{
+    display:inline-flex;align-items:center;gap:9px;
+    font-family:var(--sans);font-weight:700;font-size:15px;letter-spacing:0;
+    color:var(--action-blue);cursor:pointer;list-style:none;
+    padding:8px 15px;border:1px solid var(--action-blue);border-radius:7px;
+    transition:background .18s ease;
+  }
+  details.shot > summary::-webkit-details-marker{display:none}
+  details.shot > summary::marker{content:""}
+  details.shot > summary:hover{background:rgba(35,84,255,.06)}
+  details.shot > summary:focus-visible{outline:3px solid var(--action-blue);outline-offset:2px}
+  details.shot > summary .chev{display:inline-block;transition:transform .18s ease;font-size:11px}
+  details.shot[open] > summary .chev{transform:rotate(90deg)}
+  details.shot figure{margin:16px 0 0}
+  details.shot img{display:block;width:100%;height:auto;border:1px solid var(--ivory);border-radius:10px}
+  details.shot figcaption{font-size:14.5px;color:var(--ink);margin-top:10px;max-width:62ch;line-height:1.45}
+  @media (prefers-reduced-motion:reduce){
+    details.shot > summary,details.shot > summary .chev{transition:none}
+  }
+
   .gotchas{margin-top:14px;list-style:none}
   .gotchas li{position:relative;padding-left:24px;font-size:16px;margin-bottom:12px;max-width:62ch;color:var(--graphite)}
   .gotchas li::before{content:"";position:absolute;left:0;top:.62em;width:9px;height:2px;background:var(--vital-orange)}
@@ -129,6 +150,7 @@
 
   <nav class="toc">
     <a href="#access">Getting access</a>
+    <a href="#sharepoint">Coming from SharePoint</a>
     <a href="#steps">Your first deploy</a>
     <a href="#readme">Adding a README</a>
     <a href="#after">After the first deploy</a>
@@ -146,6 +168,22 @@
     <li><b>Sign out of any personal GitHub account first.</b> If you are still signed in to a personal account when you accept the invite, you can end up linking that personal account to Elsevier, where colleagues can see your other activity.</li>
     <li><b>Watch the timing.</b> The ticket resolves in a few minutes, but the GitHub invite can take about two hours to arrive, and an unaccepted invite expires after three days.</li>
   </ul>
+  <details class="shot">
+    <summary><span class="chev">&#9654;</span>Show me the invitation</summary>
+    <figure>
+      <img src="../screenshots/01-accept-invitation.png" alt="The invitation arrives by email. Click the green Join button to accept it.">
+      <figcaption>The invitation arrives by email. Click the green Join button to accept it.</figcaption>
+    </figure>
+  </details>
+
+  <h3 class="sec" id="sharepoint">If you are coming from SharePoint</h3>
+  <p class="body">Most of this will feel familiar. You put a file somewhere shared, and other people open it from there. Two habits carry straight across.</p>
+  <ul class="gotchas">
+    <li><b>Uploading the same filename replaces the old file.</b> It does not create a duplicate, exactly as it works in SharePoint.</li>
+    <li><b>Nothing is lost when you replace it.</b> SharePoint keeps version history. Here, every commit is a version history entry, and you can go back to any of them.</li>
+  </ul>
+  <p class="body">One thing works differently, and it is the one that matters. In SharePoint the file itself is what you send, so calling something <code>report_v2.docx</code> is harmless. Here the web address is tied to the filename. If you upload <code>index_v2.html</code>, your link keeps serving the old <code>index.html</code> and nobody sees your changes.</p>
+  <p class="body"><b>So always save over the file you already have.</b> Keep the name identical and let the commit history do the versioning. That is what keeps one link working forever, which is the whole reason to host something in the first place.</p>
 
   <div class="callout key">
     <h2>The one that catches everyone: name it index.html</h2>
@@ -157,21 +195,64 @@
   <ol class="steps">
     <li>
       <h4>Create a repository</h4>
-      <p>In GitHub, click <code>New</code>, give the repository a clear name, and set it to <b>Public</b> (GitHub Pages needs public on our plan). Leave the rest default and create it. <span class="muted">A repository is just a folder with a full memory of its own history.</span></p>
+      <p>From your repositories list, click the green <b>New</b> button. Give it a clear name, set visibility to <b>Public</b>, and leave everything else alone. <span class="muted">A repository is just a folder that remembers its own history.</span></p>
+      <details class="shot">
+        <summary><span class="chev">&#9654;</span>Show me where to click</summary>
+        <figure>
+          <img src="../screenshots/02-new-repository.png" alt="The green New button sits at the top right of your repositories list.">
+          <figcaption>The green New button sits at the top right of your repositories list.</figcaption>
+        </figure>
+      </details>
+      <details class="shot">
+        <summary><span class="chev">&#9654;</span>Show me the form</summary>
+        <figure>
+          <img src="../screenshots/03-create-repository.png" alt="Name the repository, then set visibility to Public. GitHub Pages needs Public on our plan. The README, gitignore, and license settings can stay off.">
+          <figcaption>Name the repository, then set visibility to Public. GitHub Pages needs Public on our plan. The README, gitignore, and license settings can stay off.</figcaption>
+        </figure>
+      </details>
     </li>
     <li>
       <h4>Add your files, with the main one named index.html</h4>
-      <p>Use <code>Add file &rarr; Upload files</code> and drag in your <code>index.html</code>. If it uses the brand fonts, upload a <code>fonts</code> folder alongside it so the relative paths resolve. Write a short commit message and click <b>Commit changes</b>.</p>
+      <p>On the empty repository screen, click <b>uploading an existing file</b>. Drag your <code>index.html</code> in, or use <b>choose your files</b>. If your page uses the brand fonts, upload the <code>fonts</code> folder alongside it so the relative paths still work. Then write a short message and click <b>Commit changes</b>.</p>
+      <p><b>Upload your file. Do not use "creating a new file."</b> That option opens a blank text editor for typing content directly into the browser. Your file already exists on your computer, and the editor cannot take fonts or images at all. Upload is the one you want, every time.</p>
       <span class="path">/index.html &nbsp;&middot;&nbsp; /fonts/national-2-regular.woff2 &nbsp;&middot;&nbsp; ...</span>
+      <details class="shot">
+        <summary><span class="chev">&#9654;</span>Show me where to upload</summary>
+        <figure>
+          <img src="../screenshots/04-upload-existing-file.png" alt="Both options appear on the empty repository screen. Choose uploading an existing file, on the right, not creating a new file on the left.">
+          <figcaption>Both options appear on the empty repository screen. Choose uploading an existing file, on the right, not creating a new file on the left.</figcaption>
+        </figure>
+      </details>
+      <details class="shot">
+        <summary><span class="chev">&#9654;</span>Show me the upload screen</summary>
+        <figure>
+          <img src="../screenshots/05-upload-and-commit.png" alt="Drag your files into the box, then add a short message and click Commit changes. Nothing is saved until you commit.">
+          <figcaption>Drag your files into the box, then add a short message and click Commit changes. Nothing is saved until you commit.</figcaption>
+        </figure>
+      </details>
     </li>
     <li>
       <h4>Turn on GitHub Pages</h4>
       <p>Go to <code>Settings &rarr; Pages</code>. Under <b>Source</b>, choose <b>Deploy from a branch</b>, set the branch to <code>main</code> and the folder to <code>/ (root)</code>, then <b>Save</b>.</p>
+      <details class="shot">
+        <summary><span class="chev">&#9654;</span>Show me the Pages settings</summary>
+        <figure>
+          <img src="../screenshots/06-enable-pages.png" alt="Settings is in the top row of tabs, Pages is down the left sidebar. Set the branch dropdown from None to main, then Save.">
+          <figcaption>Settings is in the top row of tabs, Pages is down the left sidebar. Set the branch dropdown from None to main, then Save.</figcaption>
+        </figure>
+      </details>
     </li>
     <li>
       <h4>Get your link</h4>
       <p>Wait about a minute and refresh the Pages settings. A box appears reading <b>"Your site is live at ..."</b> with the full URL. That link is your shareable address. The pattern is predictable:</p>
       <span class="path">https://&lt;your-account&gt;.github.io/&lt;repo-name&gt;/</span>
+      <details class="shot">
+        <summary><span class="chev">&#9654;</span>Show me where the link appears</summary>
+        <figure>
+          <img src="../screenshots/07-your-site-is-live.png" alt="Once it has published, a box appears at the top of the Pages settings reading Your site is live at, with your address.">
+          <figcaption>Once it has published, a box appears at the top of the Pages settings reading &ldquo;Your site is live at&rdquo; with your address.</figcaption>
+        </figure>
+      </details>
     </li>
     <li>
       <h4>Update it anytime</h4>
@@ -190,7 +271,7 @@
   <div class="task">
     <h4>Upload a new version</h4>
     <p class="clickpath"><b>Code</b> tab &rarr; <b>+</b> next to Code &rarr; <b>Upload files</b> &rarr; drag or choose &rarr; <b>Commit changes</b></p>
-    <p>Uploading a file with the same name replaces the old one. You do not need to delete the previous version first.</p>
+    <p><b>Save over the file you already have.</b> Upload it with exactly the same name and it replaces the old one. You do not need to delete the previous version first, and you should not rename it to v2. The old version stays in your commit history if you ever need it, and your link keeps working because the filename never changed.</p>
   </div>
 
   <div class="task">
@@ -202,12 +283,26 @@
     <h4>Delete a file</h4>
     <p class="clickpath">Open the file &rarr; <b>...</b> menu &rarr; <b>Delete file</b> &rarr; <b>Commit changes</b></p>
     <p>The commit is the part people miss. Nothing actually changes until you commit, so if the file still looks like it is there, that is usually why.</p>
+    <details class="shot">
+      <summary><span class="chev">&#9654;</span>Show me the menu</summary>
+      <figure>
+        <img src="../screenshots/09-delete-a-file.png" alt="Open the file, then use the three dot menu at the top right. Delete file is at the bottom of the list.">
+        <figcaption>Open the file, then use the three dot menu at the top right. Delete file is at the bottom of the list.</figcaption>
+      </figure>
+    </details>
   </div>
 
   <div class="task">
     <h4>Check whether it has published</h4>
     <p class="clickpath"><b>Actions</b> tab</p>
     <p>Your page is not live the instant you commit. GitHub runs a short build first, usually under a minute. The Actions tab shows it running, and a green check means it has published. If your change is not showing, look here before you start troubleshooting anything else.</p>
+    <details class="shot">
+      <summary><span class="chev">&#9654;</span>Show me the Actions tab</summary>
+      <figure>
+        <img src="../screenshots/08-check-the-build.png" alt="A yellow dot means the build is still queued or running. Wait for the green check, then reload your page.">
+        <figcaption>A yellow dot means the build is still queued or running. Wait for the green check, then reload your page.</figcaption>
+      </figure>
+    </details>
   </div>
 
   <div class="task">
